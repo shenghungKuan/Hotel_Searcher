@@ -125,7 +125,6 @@ public class DatabaseHandler {
                 statement.setString(1, newuser);
                 statement.setString(2, passhash);
                 statement.setString(3, usersalt);
-                statement.executeUpdate();
                 statement.close();
             }
             catch(SQLException e) {
@@ -148,8 +147,23 @@ public class DatabaseHandler {
             statement.setString(1, username);
             statement.setString(2, passhash);
             ResultSet results = statement.executeQuery();
-            boolean flag = results.next();
-            return flag;
+            return results.next();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean checkUsername(String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Checking: dbConnection successful");
+            statement = connection.prepareStatement(PreparedStatements.CHECK_SQL);
+
+            statement.setString(1, username);
+            ResultSet results = statement.executeQuery();
+            return results.next();
         }
         catch (SQLException e) {
             System.out.println(e);
