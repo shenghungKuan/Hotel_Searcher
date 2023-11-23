@@ -13,15 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 
 /** An example that demonstrates how to process HTML forms with servlets.
  */
 @SuppressWarnings("serial")
-public class RegistrationServlet extends HttpServlet {
+public class PortalServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,10 +39,8 @@ public class RegistrationServlet extends HttpServlet {
 
 		VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
 		VelocityContext context = new VelocityContext();
-		Template template = ve.getTemplate("templates/Registration.html");
-		context.put("title", "Registration");
-		context.put("action", "/register");
-		context.put("move", "Sign up");
+		Template template = ve.getTemplate("templates/Portal.html");
+		context.put("action", "/portal");
 
 		template.merge(context, out);
 
@@ -59,22 +54,39 @@ public class RegistrationServlet extends HttpServlet {
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);
 		HttpSession session = request.getSession();
-		PrintWriter out = response.getWriter();
 
 		String username = request.getParameter("username");
 		username = StringEscapeUtils.escapeHtml4(username);
 		String password = request.getParameter("pass");
 		password = StringEscapeUtils.escapeHtml4(password);
+		String submitValue = request.getParameter("register");
+		System.out.println(submitValue);
+		if (submitValue == null) {
+			response.sendRedirect("/portal");
+			return;
+		}
 
 		DatabaseHandler dbHandler = DatabaseHandler.getInstance();
-		if (dbHandler.checkUsername(username)) {
-			session.setAttribute("message", username + " is already in use");
-			session.setAttribute("username", null);
-			response.sendRedirect("/register");
-		} else {
-			dbHandler.registerUser(username, password);
-			session.setAttribute("username", username);
-			response.sendRedirect("/search");
+		switch (submitValue) {
+			case "Sign up":
+				if (dbHandler.checkUsername(username)) {
+					session.setAttribute("message", username + " is already in use");
+					session.setAttribute("username", null);
+					response.sendRedirect("/portal");
+				} else {
+					dbHandler.registerUser(username, password);
+					session.setAttribute("username", username);
+					response.sendRedirect("/search");
+				}
+			case "Sign in":
+				if (!dbHandler.authenticateUser(username, password)) {
+					session.setAttribute("message", "Invalid username or password");
+					session.setAttribute("username", null);
+					response.sendRedirect("/portal");
+				} else {
+					session.setAttribute("username", username);
+					response.sendRedirect("/search");
+				}
 		}
 	}
 }
