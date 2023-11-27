@@ -31,6 +31,15 @@ public class Hotel {
     @SerializedName("ad")
     private String address;
 
+    public String getLink() {
+
+        return "https://www.expedia.com/"
+                + this.name.replace(" ", "-")
+                + ".h"
+                + this.id
+                + ".Hotel-Information";
+    }
+
     /**
      * Getter of the city
      * @return the city
