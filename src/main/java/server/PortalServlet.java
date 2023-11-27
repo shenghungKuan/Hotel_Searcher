@@ -43,6 +43,7 @@ public class PortalServlet extends HttpServlet {
 		context.put("action", "/portal");
 
 		template.merge(context, out);
+		session.setAttribute("message", null);
 
 		response.setStatus(HttpServletResponse.SC_OK);
 
@@ -60,7 +61,6 @@ public class PortalServlet extends HttpServlet {
 		String password = request.getParameter("pass");
 		password = StringEscapeUtils.escapeHtml4(password);
 		String submitValue = request.getParameter("register");
-		System.out.println(submitValue);
 		if (submitValue == null) {
 			response.sendRedirect("/portal");
 			return;
@@ -68,7 +68,7 @@ public class PortalServlet extends HttpServlet {
 
 		DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 		switch (submitValue) {
-			case "Sign up":
+			case "Sign up" -> {
 				if (dbHandler.checkUsername(username)) {
 					session.setAttribute("message", username + " is already in use");
 					session.setAttribute("username", null);
@@ -78,15 +78,18 @@ public class PortalServlet extends HttpServlet {
 					session.setAttribute("username", username);
 					response.sendRedirect("/search");
 				}
-			case "Sign in":
+			}
+			case "Sign in" -> {
 				if (!dbHandler.authenticateUser(username, password)) {
 					session.setAttribute("message", "Invalid username or password");
 					session.setAttribute("username", null);
 					response.sendRedirect("/portal");
 				} else {
 					session.setAttribute("username", username);
+					session.setAttribute("message", null);
 					response.sendRedirect("/search");
 				}
+			}
 		}
 	}
 }
