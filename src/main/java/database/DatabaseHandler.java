@@ -196,12 +196,12 @@ public class DatabaseHandler {
         return salt;
     }
 
-    public static void main(String[] args) {
-        /*DatabaseHandler dhandler = DatabaseHandler.getInstance();
+    /*public static void main(String[] args) {
+        *//*DatabaseHandler dhandler = DatabaseHandler.getInstance();
         dhandler.createTable();
         System.out.println("created a user table ");
         dhandler.registerUser("lucas", "lukeS1k23w");
-        System.out.println("Registered luke.");*/
-    }
+        System.out.println("Registered luke.");*//*
+    }*/
 }
 
