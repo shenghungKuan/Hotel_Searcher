@@ -125,6 +125,7 @@ public class DatabaseHandler {
                 statement.setString(1, newuser);
                 statement.setString(2, passhash);
                 statement.setString(3, usersalt);
+                statement.executeUpdate();
                 statement.close();
             }
             catch(SQLException e) {
@@ -195,12 +196,12 @@ public class DatabaseHandler {
         return salt;
     }
 
-    /*public static void main(String[] args) {
-        DatabaseHandler dhandler = DatabaseHandler.getInstance();
+    public static void main(String[] args) {
+        /*DatabaseHandler dhandler = DatabaseHandler.getInstance();
         dhandler.createTable();
         System.out.println("created a user table ");
-        dhandler.registerUser("luke", "lukeS1k23w");
-        System.out.println("Registered luke.");
-    }*/
+        dhandler.registerUser("lucas", "lukeS1k23w");
+        System.out.println("Registered luke.");*/
+    }
 }
 
