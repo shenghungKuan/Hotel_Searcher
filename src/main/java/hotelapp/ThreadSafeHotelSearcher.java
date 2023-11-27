@@ -1,5 +1,8 @@
 package hotelapp;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -48,5 +51,14 @@ public class ThreadSafeHotelSearcher extends HotelSearcher{
         } finally {
             lock.readLock().unlock();
         }
+    }
+
+    @Override
+    public List<Hotel> search(String hotelName) {
+        return super.search(hotelName);
+    }
+
+    public Collection<Hotel> getHotels() {
+        return super.getHotels();
     }
 }
