@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<form>
+    <label for="hotelName">Hotel name:</label><br>
+    <input type="text" id="hotelName" name="hotelName"><br>
+    <input type=submit name="search" value='Search'><br>
+    #foreach( $hotel in $hotels)
+    <a href="/hotel?hotelId=$hotel.id">$hotel.name</a><br>
+    #end
+</form>
+<p>
+    <input type=submit name="logout" value='Log out'>
+</p>
+
+</body>
+</html>
