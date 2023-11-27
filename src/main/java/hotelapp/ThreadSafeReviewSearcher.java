@@ -7,6 +7,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -68,27 +69,11 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
     }
 
     /**
-     * Add the words from the review text in the reviews to the data structure
-     * Parse and count the words in the review text, adding the word count into the data structure
-     * @param review The review to be processed
-     */
-    protected void addWord(Review review) {
-        try {
-            this.keywordsLock.writeLock().lock();
-            super.addWord(review);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            this.keywordsLock.writeLock().unlock();
-        }
-    }
-
-    /**
      * Return a set of Review objects with a given hotel id
      * @param hotelId the hotel id
      * @return the set of Review objects with the given hotel id
      */
-    public TreeSet<Review> findReview(String hotelId) {
+    public Set<Review> findReview(String hotelId) {
         try {
             this.reviewsLock.readLock().lock();
             if (this.reviews.get(hotelId) == null) {
@@ -96,36 +81,6 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
                 return null;
             }
             return super.findReview(hotelId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            this.reviewsLock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Return a set of Triplet of the frequency of the word, the word, the review containing the word
-     * @param keyword the word to find
-     * @return the set of Triplet of the frequency of the word, the word, the review containing the word
-     */
-    public TreeSet<Triplet<Integer, String, Review>> findWord(String keyword) {
-        try {
-            this.keywordsLock.readLock().lock();
-            return super.findWord(keyword);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            this.keywordsLock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Print the reviews
-     */
-    public void showReviews() {
-        try {
-            this.reviewsLock.readLock().lock();
-            super.showReviews();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
