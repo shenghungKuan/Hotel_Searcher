@@ -7,7 +7,9 @@ import com.google.gson.JsonParser;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main searching class containing hotel search methods and several data structure for storing data
@@ -21,15 +23,6 @@ public abstract class HotelSearcher {
      */
     public HotelSearcher() {
         this.hotels = new TreeMap<>();
-    }
-
-    /**
-     * Constructor with parseHotel
-     * @param path the hotel file directory to be parsed
-     */
-    public HotelSearcher(String path) {
-        this.hotels = new TreeMap<>();
-        this.parseHotel(path);
     }
 
     /**
@@ -64,5 +57,24 @@ public abstract class HotelSearcher {
             return null;
         }
         return this.hotels.get(hotelId);
+    }
+
+    public List<Hotel> search(String hotelName) {
+        List<Hotel> res = new ArrayList<>();
+        Pattern pattern = Pattern.compile(hotelName, Pattern.CASE_INSENSITIVE);
+        Matcher matcher;
+        for (Hotel hotel: this.hotels.values()) {
+            matcher = pattern.matcher(hotel.getName());
+            if (matcher.find()) {
+                res.add(hotel);
+            }
+        }
+        return res;
+    }
+
+    public Collection<Hotel> getHotels() {
+        List<Hotel> list = new ArrayList<>();
+        list.addAll(this.hotels.values());
+        return list;
     }
 }
