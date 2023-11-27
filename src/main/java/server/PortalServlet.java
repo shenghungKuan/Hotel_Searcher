@@ -74,9 +74,15 @@ public class PortalServlet extends HttpServlet {
 					session.setAttribute("username", null);
 					response.sendRedirect("/portal");
 				} else {
-					dbHandler.registerUser(username, password);
-					session.setAttribute("username", username);
-					response.sendRedirect("/search");
+					if (!password.matches(".{8,}")) {
+						session.setAttribute("message", "Password is too short (at least 8 characters)");
+						session.setAttribute("username", null);
+						response.sendRedirect("/portal");
+					} else {
+						dbHandler.registerUser(username, password);
+						session.setAttribute("username", username);
+						response.sendRedirect("/search");
+					}
 				}
 			}
 			case "Sign in" -> {
