@@ -5,7 +5,12 @@
     <title>Search</title>
 </head>
 <body>
-<form>
+<p>
+<form method="post" action="/logout">
+    <input type=submit name="logout" value='Log out'><br>
+</form>
+</p>
+<form method="get" action="/search">
     <label for="hotelName">Hotel name:</label><br>
     <input type="text" id="hotelName" name="hotelName"><br>
     <input type=submit name="search" value='Search'><br>
@@ -13,9 +18,6 @@
     <a href="/hotel?hotelId=$hotel.id">$hotel.name</a><br>
     #end
 </form>
-<p>
-    <input type=submit name="logout" value='Log out'>
-</p>
 
 </body>
 </html>
