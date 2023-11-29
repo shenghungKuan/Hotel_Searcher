@@ -18,14 +18,23 @@ public class Review implements Comparable<Review>{
     @SerializedName("reviewSubmissionTime")
     private String datePosted;
 
+    private int ratingOverall;
 
-    public Review(String hotelId, String reviewId, String title, String reviewText, String userNickname, String datePosted) {
+
+    public Review(String hotelId, String title, String reviewText, String userNickname, String datePosted) {
         this.hotelId = hotelId;
-        this.reviewId = reviewId;
         this.title = title;
         this.reviewText = reviewText;
         this.userNickname = userNickname;
         this.datePosted = datePosted;
+    }
+
+    public int getRatingOverall() {
+        return ratingOverall;
+    }
+
+    public void setRatingOverall(int ratingOverall) {
+        this.ratingOverall = ratingOverall;
     }
 
     /**
@@ -133,10 +142,7 @@ public class Review implements Comparable<Review>{
     public int compareTo(Review review) {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         int dateDiff = LocalDate.parse(review.getDatePosted(), formatter).compareTo(LocalDate.parse(this.getDatePosted(), formatter));
-        if(dateDiff != 0){
-            return dateDiff;
-        }
-        return this.reviewId.compareTo(review.getReviewId());
+        return dateDiff;
     }
 
     /**
