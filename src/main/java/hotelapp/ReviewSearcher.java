@@ -5,6 +5,7 @@ import org.javatuples.Triplet;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -59,5 +60,38 @@ public abstract class ReviewSearcher {
      */
     public Set<Review> findReview(String hotelId) {
         return this.reviews.get(hotelId);
+    }
+
+    public Review findSpecificReview (String hotelId, String username) {
+        if (this.reviews.get(hotelId) == null) {
+            return null;
+        }
+        for (Review review: this.reviews.get(hotelId)) {
+            if (review.getUserNickname() != null && review.getUserNickname().equals(username)) {
+                return review;
+            }
+        }
+        return null;
+    }
+
+    public void addReview(String username, String hotelId, String title, String text) {
+        Review review = new Review(hotelId, title, text, username, LocalDateTime.now().toString());
+        if (this.reviews.get(hotelId) != null) {
+            this.reviews.get(hotelId).add(review);
+        } else {
+            TreeSet<Review> reviewSet = new TreeSet<>();
+            reviewSet.add(review);
+            this.reviews.put(hotelId, reviewSet);
+        }
+    }
+
+    public void deleteReview (String username, String hotelId) {
+        for (Review review: this.reviews.get(hotelId)) {
+            if (review.getUserNickname().equals(username)) {
+                this.reviews.get(hotelId).remove(review);
+                break;
+            }
+        }
+
     }
 }
