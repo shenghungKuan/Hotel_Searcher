@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HotelInfo</title>
+</head>
+<body>
+<p>
+<form method="post" action="/logout">
+  <input type=submit name="logout" value='Log out'><br>
+</form>
+</p>
+<p>
+<form method="get" action="/review?hotelId=$id">
+  <input type=submit name="review" value='Add/Modify/Delete review'><br>
+</form>
+</p>
+<p>
+  Hotel: $name<br>
+  Id: $id<br>
+  Address: $address<br>
+  Rating: $rating<br>
+  Link: <a href="$link">$name</a><br>
+  Reviews:<br>
+  #foreach( $review in $reviews)
+    <br>User: $review.userNickname<br>
+    Title: $review.title<br>
+    Date: $review.datePosted<br>
+    Overall rating: $review.ratingOverall<br>
+    Review: $review.reviewText<br>
+  #end
+</p>
+
+</body>
+</html>
