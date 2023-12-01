@@ -21,7 +21,7 @@ import java.util.Set;
 
 public class ReviewServlet extends HttpServlet {
     /**
-     * Called by the server (via the service method) to allow a servlet to handle a hotelInfo GET request.
+     * Called by the server (via the service method) to allow a servlet to handle a review GET request.
      * @param request an HttpServletRequest object that contains the request the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response the servlet sends to the client
      * @throws ServletException if the request for the GET could not be handled
@@ -58,6 +58,14 @@ public class ReviewServlet extends HttpServlet {
         template.merge(context, out);
 
     }
+
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a review POST request.
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the GET could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the GET request
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -76,11 +84,11 @@ public class ReviewServlet extends HttpServlet {
         }
 
         ThreadSafeReviewSearcher reviewSearcher = (ThreadSafeReviewSearcher) getServletContext().getAttribute("reviewSearcher");
-        Review review = reviewSearcher.findSpecificReview(hotelId, username);
+        boolean hasReview = reviewSearcher.findSpecificReview(hotelId, username);
 
         switch (submitValue) {
             case "add" -> {
-                if (review == null) {
+                if (!hasReview) {
                     reviewSearcher.addReview(username, hotelId, title, text);
                     response.sendRedirect("/hotel?hotelId=" + hotelId);
                 } else {
@@ -89,7 +97,7 @@ public class ReviewServlet extends HttpServlet {
                 }
             }
             case "modify" -> {
-                if (review == null) {
+                if (!hasReview) {
                     session.setAttribute("message", "You don't have any reviews");
                     response.sendRedirect("/review?hotelId=" + hotelId);
                 } else {
@@ -99,7 +107,7 @@ public class ReviewServlet extends HttpServlet {
                 }
             }
             case "delete" -> {
-                if (review == null) {
+                if (!hasReview) {
                     session.setAttribute("message", "You don't have any reviews");
                     response.sendRedirect("/review?hotelId=" + hotelId);
                 } else {

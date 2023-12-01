@@ -31,6 +31,10 @@ public class Hotel {
     @SerializedName("ad")
     private String address;
 
+    /**
+     * Generates the expedia link and return
+     * @return the expedia link
+     */
     public String getLink() {
 
         return "https://www.expedia.com/"

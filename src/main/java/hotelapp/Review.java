@@ -21,6 +21,14 @@ public class Review implements Comparable<Review>{
     private int ratingOverall;
 
 
+    /**
+     * The constructor of a Review
+     * @param hotelId id of the hotel
+     * @param title title of the hotel
+     * @param reviewText review content
+     * @param userNickname nickname of the user
+     * @param datePosted posted date of the Review
+     */
     public Review(String hotelId, String title, String reviewText, String userNickname, String datePosted) {
         this.hotelId = hotelId;
         this.title = title;

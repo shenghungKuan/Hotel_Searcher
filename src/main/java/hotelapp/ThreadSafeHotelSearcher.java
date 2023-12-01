@@ -53,6 +53,11 @@ public class ThreadSafeHotelSearcher extends HotelSearcher{
         }
     }
 
+    /**
+     * Returns a list of hotel whose names contain the given name
+     * @param hotelName the name of the hotels
+     * @return a list of hotel whose names contain the given name
+     */
     @Override
     public List<Hotel> search(String hotelName) {
         try {
@@ -65,6 +70,10 @@ public class ThreadSafeHotelSearcher extends HotelSearcher{
         }
     }
 
+    /**
+     * Return a collection of all the hotels
+     * @return a collection of all the hotels
+     */
     public Collection<Hotel> getHotels() {
         try {
             lock.readLock().lock();

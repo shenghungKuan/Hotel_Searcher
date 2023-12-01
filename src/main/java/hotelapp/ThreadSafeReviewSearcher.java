@@ -106,8 +106,14 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
         }
     }
 
+    /**
+     * Finds the review of the user of the hotel with given hotel id
+     * @param hotelId the id of the hotel
+     * @param username username
+     * @return true if the user already has a review of the hotel
+     */
     @Override
-    public Review findSpecificReview(String hotelId, String username) {
+    public boolean findSpecificReview(String hotelId, String username) {
         try {
             reviewsLock.readLock().lock();
             return super.findSpecificReview(hotelId, username);
@@ -118,6 +124,13 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
         }
     }
 
+    /**
+     * Adds review
+     * @param username username
+     * @param hotelId hotel id
+     * @param title title of the review
+     * @param text review content
+     */
     @Override
     public void addReview(String username, String hotelId, String title, String text) {
         try {
@@ -130,6 +143,11 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
         }
     }
 
+    /**
+     * Removes the review of the user of the hotel
+     * @param username username
+     * @param hotelId hotel id
+     */
     @Override
     public void deleteReview(String username, String hotelId) {
         try {

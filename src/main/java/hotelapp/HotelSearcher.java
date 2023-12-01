@@ -59,6 +59,11 @@ public abstract class HotelSearcher {
         return this.hotels.get(hotelId);
     }
 
+    /**
+     * Returns a list of hotel whose names contain the given name
+     * @param hotelName the name of the hotels
+     * @return a list of hotel whose names contain the given name
+     */
     public List<Hotel> search(String hotelName) {
         List<Hotel> res = new ArrayList<>();
         Pattern pattern = Pattern.compile(hotelName, Pattern.CASE_INSENSITIVE);
@@ -72,6 +77,10 @@ public abstract class HotelSearcher {
         return res;
     }
 
+    /**
+     * Return a collection of all the hotels
+     * @return a collection of all the hotels
+     */
     public Collection<Hotel> getHotels() {
         List<Hotel> list = new ArrayList<>();
         list.addAll(this.hotels.values());

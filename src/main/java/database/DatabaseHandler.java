@@ -38,6 +38,12 @@ public class DatabaseHandler {
 
 
     // Load info from config file database.properties
+
+    /**
+     * load database configuration properties
+     * @param propertyFile filename of the properties file
+     * @return
+     */
     public Properties loadConfigFile(String propertyFile) {
         Properties config = new Properties();
         try (FileReader fr = new FileReader(propertyFile)) {
@@ -50,6 +56,9 @@ public class DatabaseHandler {
         return config;
     }
 
+    /**
+     * Creates a table in the designated database
+     */
     public void createTable() {
         Statement statement;
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -137,6 +146,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Authenticates users by checking if the entered password matches the one in the database
+     * @param username username
+     * @param password password
+     * @return true if it matches, otherwise false
+     */
     public boolean authenticateUser(String username, String password) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -156,6 +171,11 @@ public class DatabaseHandler {
         return false;
     }
 
+    /**
+     * Checks if the username already exists in the databse
+     * @param username username
+     * @return true if the username already exists, otherwise false
+     */
     public boolean checkUsername(String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {

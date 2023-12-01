@@ -62,18 +62,31 @@ public abstract class ReviewSearcher {
         return this.reviews.get(hotelId);
     }
 
-    public Review findSpecificReview (String hotelId, String username) {
+    /**
+     * Finds the review of the user of the hotel with given hotel id
+     * @param hotelId the id of the hotel
+     * @param username username
+     * @return true if the user already has a review of the hotel
+     */
+    public boolean findSpecificReview (String hotelId, String username) {
         if (this.reviews.get(hotelId) == null) {
-            return null;
+            return false;
         }
         for (Review review: this.reviews.get(hotelId)) {
             if (review.getUserNickname() != null && review.getUserNickname().equals(username)) {
-                return review;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
+    /**
+     * Adds review
+     * @param username username
+     * @param hotelId hotel id
+     * @param title title of the review
+     * @param text review content
+     */
     public void addReview(String username, String hotelId, String title, String text) {
         Review review = new Review(hotelId, title, text, username, LocalDateTime.now().toString());
         if (this.reviews.get(hotelId) != null) {
@@ -85,6 +98,11 @@ public abstract class ReviewSearcher {
         }
     }
 
+    /**
+     * Removes the review of the user of the hotel
+     * @param username username
+     * @param hotelId hotel id
+     */
     public void deleteReview (String username, String hotelId) {
         for (Review review: this.reviews.get(hotelId)) {
             if (review.getUserNickname().equals(username)) {

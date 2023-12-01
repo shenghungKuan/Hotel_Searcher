@@ -22,6 +22,9 @@ public class PreparedStatements {
     public static final String AUTH_SQL =
             "SELECT username FROM users " + "WHERE username = ? AND password = ?";
 
+    /**
+     * Used to check if the username is in used
+     */
     public static final String CHECK_SQL =
             "SELECT username FROM users " + "WHERE username = ?";
 
