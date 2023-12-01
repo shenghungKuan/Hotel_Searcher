@@ -55,10 +55,24 @@ public class ThreadSafeHotelSearcher extends HotelSearcher{
 
     @Override
     public List<Hotel> search(String hotelName) {
-        return super.search(hotelName);
+        try {
+            lock.readLock().lock();
+            return super.search(hotelName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     public Collection<Hotel> getHotels() {
-        return super.getHotels();
+        try {
+            lock.readLock().lock();
+            return super.getHotels();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 }

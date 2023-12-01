@@ -20,7 +20,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ThreadSafeReviewSearcher extends ReviewSearcher{
     private ReentrantReadWriteLock reviewsLock;
-    private ReentrantReadWriteLock keywordsLock;
 
     private ExecutorService poolManager;
     private Phaser phaser = new Phaser();
@@ -34,7 +33,6 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
     public ThreadSafeReviewSearcher(String nThreads, String path) {
         super();
         this.reviewsLock = new ReentrantReadWriteLock();
-        this.keywordsLock = new ReentrantReadWriteLock();
         if (nThreads == null || Integer.parseInt(nThreads) <= 0) {
             this.poolManager = Executors.newFixedThreadPool(1);
         } else {
@@ -105,6 +103,42 @@ public class ThreadSafeReviewSearcher extends ReviewSearcher{
             }
         } catch (IOException e) {
             System.out.println("Can not open directory: " + directory);
+        }
+    }
+
+    @Override
+    public Review findSpecificReview(String hotelId, String username) {
+        try {
+            reviewsLock.readLock().lock();
+            return super.findSpecificReview(hotelId, username);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            reviewsLock.readLock().unlock();
+        }
+    }
+
+    @Override
+    public void addReview(String username, String hotelId, String title, String text) {
+        try {
+            reviewsLock.writeLock().lock();
+            super.addReview(username, hotelId, title, text);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            reviewsLock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public void deleteReview(String username, String hotelId) {
+        try {
+            reviewsLock.writeLock().lock();
+            super.deleteReview(username, hotelId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            reviewsLock.writeLock().unlock();
         }
     }
 
