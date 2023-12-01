@@ -39,6 +39,12 @@ public class ReviewServlet extends HttpServlet {
         session.setAttribute("hotelId", hotelId);
         PrintWriter out = response.getWriter();
 
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            response.sendRedirect("/portal");
+            return;
+        }
+
         String message = (String) session.getAttribute("message");
         if (message != null) {
             out.println(message);
