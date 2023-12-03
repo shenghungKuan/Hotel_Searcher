@@ -65,8 +65,5 @@ public class SearchServlet extends HttpServlet {
 
         template.merge(context, writer);
         out.println(writer);
-
-        response.setStatus(HttpServletResponse.SC_OK);
-
     }
 }

@@ -25,8 +25,5 @@ public class LogoutServlet extends HttpServlet {
         session.setAttribute("message", "Log out successfully");
         session.setAttribute("username", null);
         response.sendRedirect("/portal");
-
-
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 }

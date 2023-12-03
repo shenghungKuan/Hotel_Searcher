@@ -16,11 +16,11 @@
 </form>
 </p>
 <p>
-  Hotel: $name<br>
-  Id: $id<br>
-  Address: $address<br>
+  Hotel: $hotel.name<br>
+  Id: $hotel.id<br>
+  Address: $hotel.address<br>
   Rating: $rating<br>
-  Link: <a href="$link">$name</a><br>
+  Link: <a href="$link" target=”_blank”>$hotel.name</a><br>
   Reviews:<br>
   #foreach( $review in $reviews)
     <br>User: $review.userNickname<br>

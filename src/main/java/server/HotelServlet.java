@@ -71,15 +71,11 @@ public class HotelServlet extends HttpServlet{
         Template template = ve.getTemplate("templates/HotelInfo.html");
         context.put("id", hotelId);
         context.put("rating", sum);
-        context.put("address", hotel.getAddress());
+        context.put("hotel", hotel);
         context.put("link", hotel.getLink());
-        context.put("name", hotel.getName());
         context.put("reviews", reviews);
 
 
         template.merge(context, out);
-
-        response.setStatus(HttpServletResponse.SC_OK);
-
     }
 }

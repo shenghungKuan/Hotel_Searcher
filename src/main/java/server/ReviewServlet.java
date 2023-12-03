@@ -49,6 +49,7 @@ public class ReviewServlet extends HttpServlet {
         if (message != null) {
             out.println(message);
         }
+        session.setAttribute("message", null);
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();

@@ -40,20 +40,19 @@ public class PortalServlet extends HttpServlet {
 		if (username != null) {
 			response.sendRedirect("/search");
 		}
-		if (message != null) {
-			out.println(message);
-		}
 
 		VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
 		VelocityContext context = new VelocityContext();
 		Template template = ve.getTemplate("templates/Portal.html");
 		context.put("action", "/portal");
+		if (message != null) {
+			context.put("message", message);
+			session.setAttribute("message", null);
+		} else {
+			context.put("message", "");
+		}
 
 		template.merge(context, out);
-		session.setAttribute("message", null);
-
-		response.setStatus(HttpServletResponse.SC_OK);
-
 	}
 
 	/**
