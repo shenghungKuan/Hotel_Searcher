@@ -59,12 +59,16 @@ public class DatabaseHandler {
     /**
      * Creates a table in the designated database
      */
-    public void createTable() {
+    public void createTables() {
         Statement statement;
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
             System.out.println("dbConnection successful");
             statement = dbConnection.createStatement();
-            statement.executeUpdate(PreparedStatements.CREATE_USER_TABLE);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERS);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_HOTELS);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_REVIEWS);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERLIKES);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERREVIEWS);
         }
         catch (SQLException ex) {
              System.out.println(ex);
@@ -216,12 +220,10 @@ public class DatabaseHandler {
         return salt;
     }
 
-    /*public static void main(String[] args) {
-        *//*DatabaseHandler dhandler = DatabaseHandler.getInstance();
-        dhandler.createTable();
-        System.out.println("created a user table ");
-        dhandler.registerUser("lucas", "lukeS1k23w");
-        System.out.println("Registered luke.");*//*
-    }*/
+    public static void main(String[] args) {
+        DatabaseHandler dhandler = DatabaseHandler.getInstance();
+        dhandler.createTables();
+        System.out.println("created tables ");
+    }
 }
 
