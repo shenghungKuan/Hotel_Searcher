@@ -69,6 +69,7 @@ public class DatabaseHandler {
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_REVIEWS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERLIKES);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERREVIEWS);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_EXPEDIAHISTORY);
         }
         catch (SQLException ex) {
              System.out.println(ex);

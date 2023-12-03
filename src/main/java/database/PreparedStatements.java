@@ -46,6 +46,13 @@ public class PreparedStatements {
                     "FOREIGN KEY (username) REFERENCES users(username), " +
                     "FOREIGN KEY (reviewid) REFERENCES reviews(reviewid));";
 
+    public static final String CREATE_TABLE_EXPEDIAHISTORY =
+            "CREATE TABLE expediahistory (" +
+                    "username VARCHAR(32) NOT NULL, " +
+                    "link VARCHAR(255) NOT NULL, " +
+                    "CONSTRAINT con PRIMARY KEY (username, link), " +
+                    "FOREIGN KEY (username) REFERENCES users(username));";
+
     /** Used to insert a new user into the database. */
     public static final String REGISTER_SQL =
             "INSERT INTO users (username, password, usersalt, lastlogin) " + "VALUES (?, ?, ?, NOW());";
