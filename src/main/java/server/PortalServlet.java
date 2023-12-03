@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 
 /** An example that demonstrates how to process HTML forms with servlets.
@@ -93,19 +95,22 @@ public class PortalServlet extends HttpServlet {
 						response.sendRedirect("/portal");
 					} else {
 						dbHandler.registerUser(username, password);
+						session.setAttribute("lastlogin", "You haven't logged in before!");
 						session.setAttribute("username", username);
 						response.sendRedirect("/search");
 					}
 				}
 			}
 			case "Sign in" -> {
-				if (!dbHandler.authenticateUser(username, password)) {
+				Timestamp date;
+				if ((date = dbHandler.authenticateUser(username, password)) == null) {
 					session.setAttribute("message", "Invalid username or password");
 					session.setAttribute("username", null);
 					response.sendRedirect("/portal");
 				} else {
 					session.setAttribute("username", username);
 					session.setAttribute("message", null);
+					session.setAttribute("lastlogin", date.toString());
 					response.sendRedirect("/search");
 				}
 			}

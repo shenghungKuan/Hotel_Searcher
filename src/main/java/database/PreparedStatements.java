@@ -48,7 +48,7 @@ public class PreparedStatements {
 
     /** Used to insert a new user into the database. */
     public static final String REGISTER_SQL =
-            "INSERT INTO users (username, password, usersalt) " + "VALUES (?, ?, ?);";
+            "INSERT INTO users (username, password, usersalt, lastlogin) " + "VALUES (?, ?, ?, NOW());";
 
     /** Used to retrieve the salt associated with a specific user. */
     public static final String SALT_SQL =
@@ -56,7 +56,12 @@ public class PreparedStatements {
 
     /** Used to authenticate a user. */
     public static final String AUTH_SQL =
-            "SELECT username FROM users " + "WHERE username = ? AND password = ?";
+            "SELECT lastlogin FROM users " + "WHERE username = ? AND password = ?";
+
+    public static final String UPDATE_LASTLOGIN =
+            "UPDATE users " +
+            "SET lastlogin = NOW() " +
+            "WHERE username = ?;";
 
     /**
      * Used to check if the username is in used

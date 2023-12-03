@@ -156,7 +156,7 @@ public class DatabaseHandler {
      * @param password password
      * @return true if it matches, otherwise false
      */
-    public boolean authenticateUser(String username, String password) {
+    public Timestamp authenticateUser(String username, String password) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
             System.out.println("Authentication: dbConnection successful");
@@ -167,12 +167,17 @@ public class DatabaseHandler {
             statement.setString(1, username);
             statement.setString(2, passhash);
             ResultSet results = statement.executeQuery();
-            return results.next();
+            if (results.next()) {
+                statement = connection.prepareStatement(PreparedStatements.UPDATE_LASTLOGIN);
+                statement.setString(1, username);
+                statement.executeUpdate();
+            }
+            return results.getTimestamp("lastlogin");
         }
         catch (SQLException e) {
             System.out.println(e);
         }
-        return false;
+        return null;
     }
 
     /**
