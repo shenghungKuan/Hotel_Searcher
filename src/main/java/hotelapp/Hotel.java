@@ -9,12 +9,6 @@ public class Hotel {
     @SerializedName("f")
     private String name;
     private String id;
-
-    @SerializedName("ci")
-    private String city;
-
-    @SerializedName("pr")
-    private String state;
     class Ll{
         private String lat;
         private String lng;
@@ -42,22 +36,6 @@ public class Hotel {
                 + ".h"
                 + this.id
                 + ".Hotel-Information";
-    }
-
-    /**
-     * Getter of the city
-     * @return the city
-     */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * Getter for the state
-     * @return the state
-     */
-    public String getState() {
-        return state;
     }
 
     /**
@@ -109,7 +87,6 @@ public class Hotel {
         return "\n" +
                 "********************\n" +
                 this.getName() + ": " + this.id + "\n" +
-                this.getAddress() + "\n" +
-                this.getCity() + ", " + this.getState() + "\n";
+                this.getAddress() + "\n";
     }
 }
