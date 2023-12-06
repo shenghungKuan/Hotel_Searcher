@@ -25,8 +25,7 @@ public class PreparedStatements {
                     "hotelid INTEGER NOT NULL, " +
                     "FOREIGN KEY (hotelid) REFERENCES hotels(hotelid), " +
                     "username VARCHAR(32) NOT NULL, " +
-                    "FOREIGN KEY (username) REFERENCES users(username), " +
-                    "title VARCHAR(32) NOT NULL, " +
+                    "title VARCHAR(64) NOT NULL, " +
                     "text LONGTEXT, " +
                     "date DATETIME NOT NULL, " +
                     "rating INT NOT NULL, " +
@@ -85,4 +84,12 @@ public class PreparedStatements {
     public static final String GET_ALLHOTEL =
             "SELECT * FROM hotels";
 
+    public static final String ADD_REVIEW =
+            "INSERT INTO reviews (hotelid, username, title, text, date, rating, likes) " + "VALUES (?, ?, ?, ?, ?, ?, 0);";
+
+    public static final String GET_REVIEWWITHID =
+            "SELECT * FROM reviews WHERE hotelid=?";
+
+    public static final String GET_REVIEWWITHNAME =
+            "SELECT * FROM reviews WHERE hotelid=? AND username=?";
 }
