@@ -2,6 +2,7 @@ package hotelapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,7 +11,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class Review implements Comparable<Review>{
     private String hotelId;
-    private String reviewId;
     private String title;
     private String reviewText;
     @SerializedName(value = "user", alternate = {"userNickname"})
@@ -29,12 +29,13 @@ public class Review implements Comparable<Review>{
      * @param userNickname nickname of the user
      * @param datePosted posted date of the Review
      */
-    public Review(String hotelId, String title, String reviewText, String userNickname, String datePosted) {
+    public Review(String hotelId, String title, String reviewText, String userNickname, Date datePosted, int rating) {
         this.hotelId = hotelId;
         this.title = title;
         this.reviewText = reviewText;
         this.userNickname = userNickname;
-        this.datePosted = datePosted;
+        this.datePosted = String.valueOf(datePosted);
+        this.ratingOverall = rating;
     }
 
     public int getRatingOverall() {
@@ -59,22 +60,6 @@ public class Review implements Comparable<Review>{
      */
     public void setHotelId(String hotelId) {
         this.hotelId = hotelId;
-    }
-
-    /**
-     * Getter for review id
-     * @return the review id
-     */
-    public String getReviewId() {
-        return reviewId;
-    }
-
-    /**
-     * Setter for review id
-     * @param reviewId the review id
-     */
-    public void setReviewId(String reviewId) {
-        this.reviewId = reviewId;
     }
 
     /**
@@ -129,8 +114,9 @@ public class Review implements Comparable<Review>{
      * Getter for posted date
      * @return datePosted the posted date
      */
-    public String getDatePosted() {
-        return datePosted;
+    public Date getDatePosted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        return Date.valueOf(LocalDate.parse(this.datePosted, formatter));
     }
 
     /**
@@ -148,9 +134,7 @@ public class Review implements Comparable<Review>{
      */
     @Override
     public int compareTo(Review review) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        int dateDiff = LocalDate.parse(review.getDatePosted(), formatter).compareTo(LocalDate.parse(this.getDatePosted(), formatter));
-        return dateDiff;
+        return this.getDatePosted().compareTo(review.getDatePosted());
     }
 
     /**
@@ -158,10 +142,9 @@ public class Review implements Comparable<Review>{
      * @return an user-friendly string format
      */
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         return "--------------------\n" +
-                "Review by " + this.getUserNickname() + " on " + LocalDate.parse(this.getDatePosted(), formatter) +
-                "\nReviewId: " + this.reviewId +
+                "Review by " + this.getUserNickname() + " on " +
+                "\nReviewId: " +
                 "\n" + this.title +
                 "\n" + this.reviewText + "\n";
     }
