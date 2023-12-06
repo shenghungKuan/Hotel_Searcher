@@ -316,7 +316,7 @@ public class DatabaseHandler {
                 statement.setString(2, review.getUserNickname());
                 statement.setString(3, review.getTitle());
                 statement.setString(4, review.getReviewText());
-                statement.setDate(5, review.getDatePosted());
+                statement.setTimestamp(5, review.getDatePosted());
                 statement.setInt(6, review.getRatingOverall());
                 statement.executeUpdate();
                 statement.close();
@@ -344,7 +344,7 @@ public class DatabaseHandler {
                             results.getString("title"),
                             results.getString("text"),
                             results.getString("username"),
-                            results.getDate("date"),
+                            results.getTimestamp("time"),
                             results.getInt("rating")));
                 }
                 statement.close();

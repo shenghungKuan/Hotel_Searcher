@@ -140,7 +140,7 @@ public class ReviewSearcher {
      * @param text review content
      */
     public void addReview(String username, String hotelId, String title, String text, int rating) {
-        Review review = new Review(hotelId, title, text, username, new java.sql.Date(System.currentTimeMillis()), rating);
+        Review review = new Review(hotelId, title, text, username, new java.sql.Timestamp(System.currentTimeMillis()), rating);
         DatabaseHandler.getInstance().addReview(review);
     }
 

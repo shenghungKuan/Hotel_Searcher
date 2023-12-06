@@ -3,7 +3,9 @@ package hotelapp;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -29,7 +31,7 @@ public class Review implements Comparable<Review>{
      * @param userNickname nickname of the user
      * @param datePosted posted date of the Review
      */
-    public Review(String hotelId, String title, String reviewText, String userNickname, Date datePosted, int rating) {
+    public Review(String hotelId, String title, String reviewText, String userNickname, Timestamp datePosted, int rating) {
         this.hotelId = hotelId;
         this.title = title;
         this.reviewText = reviewText;
@@ -114,9 +116,9 @@ public class Review implements Comparable<Review>{
      * Getter for posted date
      * @return datePosted the posted date
      */
-    public Date getDatePosted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        return Date.valueOf(LocalDate.parse(this.datePosted, formatter));
+    public Timestamp getDatePosted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd[' ']['T']HH:mm:ss[.S][X]");
+        return Timestamp.valueOf(LocalDateTime.parse(this.datePosted, formatter));
     }
 
     /**

@@ -27,7 +27,7 @@ public class PreparedStatements {
                     "username VARCHAR(32) NOT NULL, " +
                     "title VARCHAR(64) NOT NULL, " +
                     "text LONGTEXT, " +
-                    "date DATETIME NOT NULL, " +
+                    "time TIMESTAMP, " +
                     "rating INT NOT NULL, " +
                     "likes INT NOT NULL);";
 
@@ -85,7 +85,7 @@ public class PreparedStatements {
             "SELECT * FROM hotels";
 
     public static final String ADD_REVIEW =
-            "INSERT INTO reviews (hotelid, username, title, text, date, rating, likes) " + "VALUES (?, ?, ?, ?, ?, ?, 0);";
+            "INSERT INTO reviews (hotelid, username, title, text, time, rating, likes) " + "VALUES (?, ?, ?, ?, ?, ?, 0);";
 
     public static final String GET_REVIEWWITHID =
             "SELECT * FROM reviews WHERE hotelid=?";
