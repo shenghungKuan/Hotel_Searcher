@@ -39,6 +39,12 @@ public class HotelServlet extends HttpServlet{
 
         HttpSession session = request.getSession();
         session.setAttribute("hotelId", hotelId);
+        String username = (String) session.getAttribute("username");
+
+        if (username == null) {
+            response.sendRedirect("/portal");
+            return;
+        }
 
         HotelSearcher hotelSearcher = (HotelSearcher) getServletContext().getAttribute("hotelSearcher");
         ReviewSearcher reviewSearcher = (ReviewSearcher) getServletContext().getAttribute("reviewSearcher");
