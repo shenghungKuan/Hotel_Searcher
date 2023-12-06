@@ -14,7 +14,7 @@ public class PreparedStatements {
     public static final String CREATE_TABLE_HOTELS =
             "CREATE TABLE hotels (" +
                     "hotelid INTEGER PRIMARY KEY, " +
-                    "name VARCHAR(32) NOT NULL, " +
+                    "name VARCHAR(64) NOT NULL, " +
                     "lat VARCHAR(32) NOT NULL, " +
                     "lng VARCHAR(32) NOT NULL, " +
                     "address VARCHAR(32) NOT NULL);";
@@ -75,5 +75,14 @@ public class PreparedStatements {
      */
     public static final String CHECK_SQL =
             "SELECT username FROM users " + "WHERE username = ?";
+
+    public static final String ADD_HOTEL =
+            "INSERT INTO hotels (hotelid, name, lat, lng, address) " + "VALUES (?, ?, ?, ?, ?);";
+
+    public static final String GET_HOTELWITHID =
+            "SELECT * FROM hotels WHERE hotelid=?";
+
+    public static final String GET_ALLHOTEL =
+            "SELECT * FROM hotels";
 
 }

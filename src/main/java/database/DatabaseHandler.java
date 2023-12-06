@@ -1,10 +1,14 @@
 package database;
 
+import hotelapp.Hotel;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -226,9 +230,84 @@ public class DatabaseHandler {
         return salt;
     }
 
+    public void addHotel(Hotel hotel) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Add hotel: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.ADD_HOTEL);
+                statement.setString(1, hotel.getId());
+                statement.setString(2, hotel.getName());
+                statement.setString(3, hotel.getLat());
+                statement.setString(4, hotel.getLng());
+                statement.setString(5, hotel.getAddress());
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public Hotel getHotelWithId(String hotelid) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Get hotel with id: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.GET_HOTELWITHID);
+                statement.setString(1, hotelid);
+                ResultSet results = statement.executeQuery();
+                if (results.next()) {
+                    Hotel hotel = new Hotel(results.getString("name"),
+                            results.getString("hotelid"), results.getString("lat"),
+                            results.getString("lng"), results.getString("address"));
+                    statement.close();
+                    return hotel;
+                }
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public List<Hotel> getAllHotel() {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Get hotel with id: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.GET_ALLHOTEL);
+                ResultSet results = statement.executeQuery();
+                List<Hotel> hotels = new ArrayList<>();
+                while (results.next()) {
+                    hotels.add(new Hotel(results.getString("name"),
+                            results.getString("hotelid"), results.getString("lat"),
+                            results.getString("lng"), results.getString("address")));
+                    statement.close();
+                }
+                return hotels;
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        DatabaseHandler dhandler = DatabaseHandler.getInstance();
-        dhandler.createTables();
+        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
+        dbhandler.createTables();
         System.out.println("created tables ");
     }
 }

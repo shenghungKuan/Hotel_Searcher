@@ -13,12 +13,10 @@ public class ThreadSafeHotelSearcher extends HotelSearcher{
 
     /**
      * Constructor of ThreadSafeHotelSearcher
-     * @param path the hotel directory to be parsed
      */
-    public ThreadSafeHotelSearcher(String path) {
+    public ThreadSafeHotelSearcher() {
         super();
         this.lock = new ReentrantReadWriteLock();
-        this.parseHotel(path);
     }
     /**
      * Parse the hotels with a given file path
@@ -70,18 +68,8 @@ public class ThreadSafeHotelSearcher extends HotelSearcher{
         }
     }
 
-    /**
-     * Return a collection of all the hotels
-     * @return a collection of all the hotels
-     */
-    public Collection<Hotel> getHotels() {
-        try {
-            lock.readLock().lock();
-            return super.getHotels();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            lock.readLock().unlock();
-        }
+    public static void main(String[] args) {
+        ThreadSafeHotelSearcher hotelSearcher = new ThreadSafeHotelSearcher();
+        hotelSearcher.parseHotel("input/hotels/hotels.json");
     }
 }

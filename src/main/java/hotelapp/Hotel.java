@@ -13,6 +13,11 @@ public class Hotel {
         private String lat;
         private String lng;
 
+        public Ll(String lat, String lng) {
+            this.lat = lat;
+            this.lng = lng;
+        }
+
         public String getLat() {
             return lat;
         }
@@ -24,6 +29,13 @@ public class Hotel {
     Ll ll;
     @SerializedName("ad")
     private String address;
+
+    public Hotel(String name, String id, String lat, String lng, String address) {
+        this.name = name;
+        this.id = id;
+        this.ll = new Ll(lat, lng);
+        this.address = address;
+    }
 
     /**
      * Generates the expedia link and return

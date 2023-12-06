@@ -22,7 +22,7 @@ public class JettyHotelServer {
 		VelocityEngine velocity = new VelocityEngine();
 		velocity.init();
 
-		ThreadSafeHotelSearcher hotelSearcher = new ThreadSafeHotelSearcher("input/hotels/hotels.json");
+		ThreadSafeHotelSearcher hotelSearcher = new ThreadSafeHotelSearcher();
 		ThreadSafeReviewSearcher reviewSearcher = new ThreadSafeReviewSearcher("3", "input/reviews");
 		handler.setAttribute("hotelSearcher", hotelSearcher);
 		handler.setAttribute("reviewSearcher", reviewSearcher);

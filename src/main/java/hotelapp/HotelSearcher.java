@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import database.DatabaseHandler;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,15 +16,10 @@ import java.util.regex.Pattern;
  * The main searching class containing hotel search methods and several data structure for storing data
  */
 public abstract class HotelSearcher {
-
-    protected TreeMap<String, Hotel> hotels;
-
     /**
      * Constructor without calling parseHotel
      */
-    public HotelSearcher() {
-        this.hotels = new TreeMap<>();
-    }
+    public HotelSearcher() {}
 
     /**
      * Parse the hotels with a given file path
@@ -38,9 +34,11 @@ public abstract class HotelSearcher {
             JsonObject jo = (JsonObject) parser.parse(fr);
             JsonArray jsonArr = jo.getAsJsonArray("sr");
 
+            DatabaseHandler db = DatabaseHandler.getInstance();
+
             Hotel[] hotels = gson.fromJson(jsonArr, Hotel[].class);
             for (Hotel hotel : hotels) {
-                this.hotels.put(hotel.getId(), hotel);
+                db.addHotel(hotel);
             }
         } catch (IOException e) {
             System.out.println("Could not read the file: " + e);
@@ -56,7 +54,7 @@ public abstract class HotelSearcher {
         if (hotelId == null) {
             return null;
         }
-        return this.hotels.get(hotelId);
+        return DatabaseHandler.getInstance().getHotelWithId(hotelId);
     }
 
     /**
@@ -65,25 +63,19 @@ public abstract class HotelSearcher {
      * @return a list of hotel whose names contain the given name
      */
     public List<Hotel> search(String hotelName) {
+        List<Hotel> hotels = DatabaseHandler.getInstance().getAllHotel();
+        if (hotelName == null) {
+            return hotels;
+        }
         List<Hotel> res = new ArrayList<>();
         Pattern pattern = Pattern.compile(hotelName, Pattern.CASE_INSENSITIVE);
         Matcher matcher;
-        for (Hotel hotel: this.hotels.values()) {
+        for (Hotel hotel: hotels) {
             matcher = pattern.matcher(hotel.getName());
             if (matcher.find()) {
                 res.add(hotel);
             }
         }
         return res;
-    }
-
-    /**
-     * Return a collection of all the hotels
-     * @return a collection of all the hotels
-     */
-    public Collection<Hotel> getHotels() {
-        List<Hotel> list = new ArrayList<>();
-        list.addAll(this.hotels.values());
-        return list;
     }
 }

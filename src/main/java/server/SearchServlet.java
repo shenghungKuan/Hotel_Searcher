@@ -57,18 +57,16 @@ public class SearchServlet extends HttpServlet {
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
-        StringWriter writer = new StringWriter();
         Template template = ve.getTemplate("templates/Searching.html");
 
-        List<Hotel> hotels;
-        if (hotelName == null) {
+        List<Hotel> hotels = searcher.search(hotelName);
+        /*if (hotelName == null) {
             hotels = (List<Hotel>) searcher.getHotels();
         } else {
             hotels = searcher.search(hotelName);
-        }
+        }*/
         context.put("hotels", hotels);
 
-        template.merge(context, writer);
-        out.println(writer);
+        template.merge(context, out);
     }
 }
