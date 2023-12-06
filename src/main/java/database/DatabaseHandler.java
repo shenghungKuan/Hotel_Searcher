@@ -282,7 +282,7 @@ public class DatabaseHandler {
     public List<Hotel> getAllHotel() {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
-            System.out.println("Get hotel with id: dbConnection successful");
+            System.out.println("Get all hotels: dbConnection successful");
             try {
                 statement = connection.prepareStatement(PreparedStatements.GET_ALLHOTEL);
                 ResultSet results = statement.executeQuery();
@@ -291,8 +291,8 @@ public class DatabaseHandler {
                     hotels.add(new Hotel(results.getString("name"),
                             results.getString("hotelid"), results.getString("lat"),
                             results.getString("lng"), results.getString("address")));
-                    statement.close();
                 }
+                statement.close();
                 return hotels;
             }
             catch(SQLException e) {
