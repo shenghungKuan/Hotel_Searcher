@@ -1,7 +1,6 @@
 package server;
 
-import hotelapp.ThreadSafeHotelSearcher;
-import hotelapp.ThreadSafeReviewSearcher;
+import hotelapp.*;
 import org.apache.velocity.app.VelocityEngine;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -22,8 +21,8 @@ public class JettyHotelServer {
 		VelocityEngine velocity = new VelocityEngine();
 		velocity.init();
 
-		ThreadSafeHotelSearcher hotelSearcher = new ThreadSafeHotelSearcher();
-		ThreadSafeReviewSearcher reviewSearcher = new ThreadSafeReviewSearcher("3", "input/reviews");
+		HotelSearcher hotelSearcher = new HotelSearcher();
+		ReviewSearcher reviewSearcher = new ReviewSearcher();
 		handler.setAttribute("hotelSearcher", hotelSearcher);
 		handler.setAttribute("reviewSearcher", reviewSearcher);
 		handler.setAttribute("templateEngine", velocity);

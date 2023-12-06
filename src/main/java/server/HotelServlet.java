@@ -1,10 +1,6 @@
 package server;
 
-import com.google.gson.JsonObject;
-import hotelapp.Hotel;
-import hotelapp.Review;
-import hotelapp.ThreadSafeHotelSearcher;
-import hotelapp.ThreadSafeReviewSearcher;
+import hotelapp.*;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -17,10 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A servlet class used to handle hotelInfo request
@@ -47,8 +40,8 @@ public class HotelServlet extends HttpServlet{
         HttpSession session = request.getSession();
         session.setAttribute("hotelId", hotelId);
 
-        ThreadSafeHotelSearcher hotelSearcher = (ThreadSafeHotelSearcher) getServletContext().getAttribute("hotelSearcher");
-        ThreadSafeReviewSearcher reviewSearcher = (ThreadSafeReviewSearcher) getServletContext().getAttribute("reviewSearcher");
+        HotelSearcher hotelSearcher = (HotelSearcher) getServletContext().getAttribute("hotelSearcher");
+        ReviewSearcher reviewSearcher = (ReviewSearcher) getServletContext().getAttribute("reviewSearcher");
 
 
         Hotel hotel = hotelSearcher.find(hotelId);
@@ -56,7 +49,7 @@ public class HotelServlet extends HttpServlet{
             response.sendRedirect("/search");
             return;
         }
-        Set<Review> reviews = reviewSearcher.findReview(hotelId);
+        List<Review> reviews = reviewSearcher.findReview(hotelId);
 
         int sum = 0;
         if (reviews != null && reviews.size() > 0) {

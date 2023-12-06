@@ -15,18 +15,22 @@ import java.util.regex.Pattern;
 /**
  * The main searching class containing hotel search methods and several data structure for storing data
  */
-public abstract class HotelSearcher {
+public class HotelSearcher {
     /**
      * Constructor without calling parseHotel
      */
     public HotelSearcher() {}
+
+    public HotelSearcher (String path) {
+        parseHotel(path);
+    }
 
     /**
      * Parse the hotels with a given file path
      * Read the json file with the given file path, load the hotel information into hotel class
      * @param filePath the file path of the hotel file
      */
-    protected void parseHotel(String filePath) {
+    private void parseHotel(String filePath) {
         Gson gson = new Gson();
 
         try (FileReader fr = new FileReader(filePath)) {
@@ -77,5 +81,9 @@ public abstract class HotelSearcher {
             }
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        HotelSearcher hotelSearcher = new HotelSearcher("input/hotels/hotels.json");
     }
 }

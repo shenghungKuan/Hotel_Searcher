@@ -1,8 +1,7 @@
 package server;
 
 import database.DatabaseHandler;
-import hotelapp.Hotel;
-import hotelapp.ThreadSafeHotelSearcher;
+import hotelapp.*;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -15,11 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class SearchServlet extends HttpServlet {
@@ -53,18 +47,13 @@ public class SearchServlet extends HttpServlet {
         String hotelName = request.getParameter("hotelName");
         hotelName = StringEscapeUtils.escapeHtml4(hotelName);
 
-        ThreadSafeHotelSearcher searcher = (ThreadSafeHotelSearcher) getServletContext().getAttribute("hotelSearcher");
+        HotelSearcher searcher = (HotelSearcher) getServletContext().getAttribute("hotelSearcher");
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
         Template template = ve.getTemplate("templates/Searching.html");
 
         List<Hotel> hotels = searcher.search(hotelName);
-        /*if (hotelName == null) {
-            hotels = (List<Hotel>) searcher.getHotels();
-        } else {
-            hotels = searcher.search(hotelName);
-        }*/
         context.put("hotels", hotels);
 
         template.merge(context, out);

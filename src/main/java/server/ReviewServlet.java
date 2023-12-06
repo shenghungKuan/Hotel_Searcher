@@ -1,10 +1,6 @@
 package server;
 
-import database.DatabaseHandler;
-import hotelapp.Hotel;
-import hotelapp.Review;
-import hotelapp.ThreadSafeHotelSearcher;
-import hotelapp.ThreadSafeReviewSearcher;
+import hotelapp.*;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -17,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Set;
 
 public class ReviewServlet extends HttpServlet {
     /**
@@ -84,13 +79,13 @@ public class ReviewServlet extends HttpServlet {
             return;
         }
 
-        ThreadSafeReviewSearcher reviewSearcher = (ThreadSafeReviewSearcher) getServletContext().getAttribute("reviewSearcher");
+        ReviewSearcher reviewSearcher = (ReviewSearcher) getServletContext().getAttribute("reviewSearcher");
         boolean hasReview = reviewSearcher.findSpecificReview(hotelId, username);
 
         switch (submitValue) {
             case "add" -> {
                 if (!hasReview) {
-                    reviewSearcher.addReview(username, hotelId, title, text);
+                    reviewSearcher.addReview(username, hotelId, title, text, 0);
                     response.sendRedirect("/hotel?hotelId=" + hotelId);
                 } else {
                     session.setAttribute("message", "You already left a review before");
@@ -103,7 +98,7 @@ public class ReviewServlet extends HttpServlet {
                     response.sendRedirect("/review?hotelId=" + hotelId);
                 } else {
                     reviewSearcher.deleteReview(username, hotelId);
-                    reviewSearcher.addReview(username, hotelId, title, text);
+                    reviewSearcher.addReview(username, hotelId, title, text, 0);
                     response.sendRedirect("/hotel?hotelId=" + hotelId);
                 }
             }
