@@ -92,4 +92,7 @@ public class PreparedStatements {
 
     public static final String GET_REVIEWWITHNAME =
             "SELECT * FROM reviews WHERE hotelid=? AND username=?";
+
+    public static final String DELETE_REVIEW =
+            "DELETE FROM reviews WHERE hotelid=? AND username=?";
 }

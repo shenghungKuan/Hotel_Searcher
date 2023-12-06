@@ -9,6 +9,10 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -140,7 +144,8 @@ public class ReviewSearcher {
      * @param text review content
      */
     public void addReview(String username, String hotelId, String title, String text, int rating) {
-        Review review = new Review(hotelId, title, text, username, new java.sql.Timestamp(System.currentTimeMillis()), rating);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        Review review = new Review(hotelId, title, text, username, Timestamp.valueOf(formatter.format(LocalDateTime.now())), rating);
         DatabaseHandler.getInstance().addReview(review);
     }
 
@@ -150,12 +155,7 @@ public class ReviewSearcher {
      * @param hotelId hotel id
      */
     public void deleteReview (String username, String hotelId) {
-        /*for (Review review: this.reviews.get(hotelId)) {
-            if (review.getUserNickname().equals(username)) {
-                this.reviews.get(hotelId).remove(review);
-                break;
-            }
-        }*/
+        DatabaseHandler.getInstance().deleteReview(hotelId, username);
 
     }
     public static void main (String[] args) {

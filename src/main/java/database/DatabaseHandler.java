@@ -363,14 +363,15 @@ public class DatabaseHandler {
     public boolean getReviewWithName(String hotelId, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
-            System.out.println("Get review with id: dbConnection successful");
+            System.out.println("Get review with username: dbConnection successful");
             try {
                 statement = connection.prepareStatement(PreparedStatements.GET_REVIEWWITHNAME);
                 statement.setString(1, hotelId);
                 statement.setString(2, username);
                 ResultSet results = statement.executeQuery();
+                boolean flag = results.next();
                 statement.close();
-                return results.next();
+                return flag;
             }
             catch(SQLException e) {
                 System.out.println(e);
@@ -380,6 +381,26 @@ public class DatabaseHandler {
             System.out.println(ex);
         }
         return false;
+    }
+
+    public void deleteReview(String hotelid, String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Delete review: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.DELETE_REVIEW);
+                statement.setString(1, hotelid);
+                statement.setString(2, username);
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     public static void main(String[] args) {
