@@ -36,6 +36,7 @@ public class HotelServlet extends HttpServlet{
         String hotelId = request.getParameter("hotelId");
         hotelId = StringEscapeUtils.escapeHtml4(hotelId);
         PrintWriter out = response.getWriter();
+        System.out.println("In hotel info, hotel Id: " + hotelId);
 
         HttpSession session = request.getSession();
         session.setAttribute("hotelId", hotelId);
@@ -67,7 +68,7 @@ public class HotelServlet extends HttpServlet{
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
-        Template template = ve.getTemplate("templates/HotelInfo.html");
+        Template template = ve.getTemplate("static/HotelInfo.html");
         context.put("id", hotelId);
         context.put("rating", sum);
         context.put("hotel", hotel);

@@ -51,7 +51,7 @@ public class SearchServlet extends HttpServlet {
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
-        Template template = ve.getTemplate("templates/Searching.html");
+        Template template = ve.getTemplate("static/Searching.html");
 
         List<Hotel> hotels = searcher.search(hotelName);
         context.put("hotels", hotels);

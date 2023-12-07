@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
+    <script src="FetchReview.js"></script>
 </head>
 <body>
 <p>
@@ -17,10 +18,17 @@
     <label for="hotelName">Hotel name:</label><br>
     <input type="text" id="hotelName" name="hotelName"><br>
     <input type=submit name="search" value='Search'><br>
-    #foreach( $hotel in $hotels)
-    <a href="/hotel?hotelId=$hotel.id">$hotel.name</a><br>
-    #end
 </form>
+<form action="">
+    <select name="hotel" onchange="fetchReview(this.value)">
+        <option value="">Select a hotel:</option>
+        #foreach( $hotel in $hotels)
+        <!--    <a href="/hotel?hotelId=$hotel.id">$hotel.name</a><br>-->
+        <option value=$hotel.id>$hotel.name</option>
+        #end
+    </select>
+</form>
+<p id="reviews"></p>
 
 </body>
 </html>

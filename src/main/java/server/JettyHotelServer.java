@@ -3,6 +3,8 @@ package server;
 import hotelapp.*;
 import org.apache.velocity.app.VelocityEngine;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 public class JettyHotelServer {
@@ -22,12 +24,21 @@ public class JettyHotelServer {
 		VelocityEngine velocity = new VelocityEngine();
 		velocity.init();
 
+		ResourceHandler resourceHandler = new ResourceHandler();
+		// Set the base resource (the root directory for your static content)
+		resourceHandler.setResourceBase("static"); // Adjust the path accordingly
+
+		// Create a HandlerList to manage multiple handlers if needed
+		HandlerList handlers = new HandlerList();
+		handlers.addHandler(resourceHandler);
+
 		HotelSearcher hotelSearcher = new HotelSearcher();
 		ReviewSearcher reviewSearcher = new ReviewSearcher();
 		handler.setAttribute("hotelSearcher", hotelSearcher);
 		handler.setAttribute("reviewSearcher", reviewSearcher);
 		handler.setAttribute("templateEngine", velocity);
-		server.setHandler(handler);
+		handlers.addHandler(handler);
+		server.setHandler(handlers);
 
 		try {
 			server.start();

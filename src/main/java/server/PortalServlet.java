@@ -45,7 +45,7 @@ public class PortalServlet extends HttpServlet {
 
 		VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
 		VelocityContext context = new VelocityContext();
-		Template template = ve.getTemplate("templates/Portal.html");
+		Template template = ve.getTemplate("static/Portal.html");
 		context.put("action", "/portal");
 		if (message != null) {
 			context.put("message", message);

@@ -56,7 +56,7 @@ public class ExpediaHistoryServlet extends HotelServlet{
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
-        Template template = ve.getTemplate("templates/ExpediaHistory.html");
+        Template template = ve.getTemplate("static/ExpediaHistory.html");
         List<String> history = dbHandler.getExpediaHistory(username);
         List<Hotel> hotels = new ArrayList<>();
         if (history != null && history.size() > 0) {

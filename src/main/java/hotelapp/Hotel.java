@@ -50,7 +50,11 @@ public class Hotel {
      */
     public String getLink() {
 
-        return this.link;
+        return "https://www.expedia.com/"
+                + this.name.replace(" ", "-")
+                + ".h"
+                + this.id
+                + ".Hotel-Information";
     }
 
     /**

@@ -48,7 +48,7 @@ public class ReviewServlet extends HttpServlet {
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
-        Template template = ve.getTemplate("templates/ReviewHandler.html");
+        Template template = ve.getTemplate("static/ReviewHandler.html");
         context.put("hotelId", hotelId);
 
         template.merge(context, out);
