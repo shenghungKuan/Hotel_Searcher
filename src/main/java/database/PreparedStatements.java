@@ -48,9 +48,8 @@ public class PreparedStatements {
     public static final String CREATE_TABLE_EXPEDIAHISTORY =
             "CREATE TABLE expediahistory (" +
                     "username VARCHAR(32) NOT NULL, " +
-                    "link VARCHAR(255) NOT NULL, " +
-                    "CONSTRAINT con PRIMARY KEY (username, link), " +
-                    "FOREIGN KEY (username) REFERENCES users(username));";
+                    "hotelid INT NOT NULL, " +
+                    "CONSTRAINT con PRIMARY KEY (username, hotelid));";
 
     /** Used to insert a new user into the database. */
     public static final String REGISTER_SQL =
@@ -95,4 +94,13 @@ public class PreparedStatements {
 
     public static final String DELETE_REVIEW =
             "DELETE FROM reviews WHERE hotelid=? AND username=?";
+
+    public static final String ADD_EXPEDIAHISTORY =
+            "INSERT INTO expediahistory (username, hotelid) " + "VALUES (?, ?);";
+
+    public static final String GET_EXPEDIAHISTORY =
+            "SELECT * FROM expediahistory WHERE username=?";
+
+    public static final String CLEAR_HISTORY =
+            "DELETE FROM expediahistory WHERE username=?";
 }

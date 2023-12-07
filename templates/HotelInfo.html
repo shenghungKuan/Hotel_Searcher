@@ -15,12 +15,17 @@
   <input type=submit name="review" value='Add/Modify/Delete review'><br>
 </form>
 </p>
+<script>
+    function redirectToRelativeURL() {
+        document.location.href = '/history?hotelId=$id';
+    }
+</script>
 <p>
   Hotel: $hotel.name<br>
   Id: $hotel.id<br>
   Address: $hotel.address<br>
   Rating: $rating<br>
-  Link: <a href="$link" target=”_blank”>$hotel.name</a><br>
+  Link: <a href="$link" target=”_blank” onclick="redirectToRelativeURL()">$hotel.name</a><br>
   Reviews:<br>
   #foreach( $review in $reviews)
     <br>User: $review.userNickname<br>

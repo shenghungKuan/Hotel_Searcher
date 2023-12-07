@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 /**
  *
@@ -391,6 +388,70 @@ public class DatabaseHandler {
                 statement = connection.prepareStatement(PreparedStatements.DELETE_REVIEW);
                 statement.setString(1, hotelid);
                 statement.setString(2, username);
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void addExpediaHistory(Hotel hotel, String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Add Expedia history: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.ADD_EXPEDIAHISTORY);
+                statement.setString(1, username);
+                statement.setString(2, hotel.getId());
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public List<String> getExpediaHistory(String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Get Expedia history: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.GET_EXPEDIAHISTORY);
+                statement.setString(1, username);
+                ResultSet results = statement.executeQuery();
+                List<String> history = new ArrayList<>();
+                while (results.next()) {
+                    history.add(results.getString("hotelid"));
+                }
+                statement.close();
+                return history;
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public void clearHistory(String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Clear history: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.CLEAR_HISTORY);
+                statement.setString(1, username);
                 statement.executeUpdate();
                 statement.close();
             }

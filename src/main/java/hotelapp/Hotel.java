@@ -30,11 +30,18 @@ public class Hotel {
     @SerializedName("ad")
     private String address;
 
+    private String link;
+
     public Hotel(String name, String id, String lat, String lng, String address) {
         this.name = name;
         this.id = id;
         this.ll = new Ll(lat, lng);
         this.address = address;
+        this.link = "https://www.expedia.com/"
+                + this.name.replace(" ", "-")
+                + ".h"
+                + this.id
+                + ".Hotel-Information";
     }
 
     /**
@@ -43,11 +50,7 @@ public class Hotel {
      */
     public String getLink() {
 
-        return "https://www.expedia.com/"
-                + this.name.replace(" ", "-")
-                + ".h"
-                + this.id
-                + ".Hotel-Information";
+        return this.link;
     }
 
     /**
