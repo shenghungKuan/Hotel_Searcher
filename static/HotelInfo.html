@@ -3,29 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>HotelInfo</title>
+  <script src="static/FetchReview.js"></script>
 </head>
 <body>
 <p>
 <form method="post" action="/logout">
   <input type=submit name="logout" value='Log out'><br>
 </form>
-</p>
 <p>
 <form method="get" action="/review?hotelId=$id">
   <input type=submit name="review" value='Add/Modify/Delete review'><br>
 </form>
-</p>
-<script>
-    function redirectToRelativeURL() {
-        document.location.href = '/history?hotelId=$id';
-    }
-</script>
 <p>
   Hotel: $hotel.name<br>
   Id: $hotel.id<br>
   Address: $hotel.address<br>
   Rating: $rating<br>
-  Link: <a href="$link" target=”_blank” onclick="redirectToRelativeURL()">$hotel.name</a><br>
+  Link: <a href="$link" target=”_blank” onclick="recordHistory($hotel.id)">$hotel.name</a><br>
   Reviews:<br>
   #foreach( $review in $reviews)
     <br>User: $review.userNickname<br>

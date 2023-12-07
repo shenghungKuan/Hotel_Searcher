@@ -14,3 +14,6 @@
        console.log(err);
      });
  };
+ function recordHistory(id) {
+         fetch('/history?hotelId=' + id, {method: 'get'});
+     };
