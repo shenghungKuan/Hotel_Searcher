@@ -39,10 +39,6 @@ public class SearchServlet extends HttpServlet {
             return;
         }
 
-        String lastLogin = (String) session.getAttribute("lastlogin");
-        if (lastLogin != null) {
-            out.println("Last login: " + lastLogin);
-        }
 
         String hotelName = request.getParameter("hotelName");
         hotelName = StringEscapeUtils.escapeHtml4(hotelName);
@@ -55,6 +51,11 @@ public class SearchServlet extends HttpServlet {
 
         List<Hotel> hotels = searcher.search(hotelName);
         context.put("hotels", hotels);
+
+        String lastLogin = (String) session.getAttribute("lastlogin");
+        if (lastLogin != null) {
+            context.put("message", "Last login: " + lastLogin);
+        }
 
         template.merge(context, out);
     }

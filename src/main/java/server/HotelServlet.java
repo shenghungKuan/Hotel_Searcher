@@ -74,7 +74,14 @@ public class HotelServlet extends HttpServlet{
         context.put("rating", sum);
         context.put("hotel", hotel);
         context.put("link", hotel.getLink());
-        context.put("reviews", reviews);
+
+        String message = (String) session.getAttribute("message");
+        if (message == null) {
+            context.put("message", "");
+        } else {
+            context.put("message", message);
+            session.setAttribute("message", null);
+        }
 
 
         template.merge(context, out);

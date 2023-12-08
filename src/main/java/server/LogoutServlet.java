@@ -17,7 +17,7 @@ public class LogoutServlet extends HttpServlet {
      * @throws IOException if an input or output error is detected when the servlet handles the GET request
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
         HttpSession session = request.getSession();

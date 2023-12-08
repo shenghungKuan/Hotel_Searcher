@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 public class ReviewServlet extends HttpServlet {
     /**
@@ -40,16 +41,15 @@ public class ReviewServlet extends HttpServlet {
             return;
         }
 
-        String message = (String) session.getAttribute("message");
-        if (message != null) {
-            out.println(message);
-        }
-        session.setAttribute("message", null);
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
         Template template = ve.getTemplate("static/ReviewHandler.html");
         context.put("hotelId", hotelId);
+
+        String message = (String) session.getAttribute("message");
+        context.put("message", Objects.requireNonNullElse(message, ""));
+        session.setAttribute("message", null);
 
         template.merge(context, out);
 
@@ -87,6 +87,7 @@ public class ReviewServlet extends HttpServlet {
                 if (!hasReview) {
                     reviewSearcher.addReview(username, hotelId, title, text, 0);
                     response.sendRedirect("/hotel?hotelId=" + hotelId);
+                    session.setAttribute("message", "Successfully added a review");
                 } else {
                     session.setAttribute("message", "You already left a review before");
                     response.sendRedirect("/review?hotelId=" + hotelId);
@@ -100,6 +101,7 @@ public class ReviewServlet extends HttpServlet {
                     reviewSearcher.deleteReview(username, hotelId);
                     reviewSearcher.addReview(username, hotelId, title, text, 0);
                     response.sendRedirect("/hotel?hotelId=" + hotelId);
+                    session.setAttribute("message", "Successfully modified the review");
                 }
             }
             case "delete" -> {
@@ -109,6 +111,7 @@ public class ReviewServlet extends HttpServlet {
                 } else {
                     reviewSearcher.deleteReview(username, hotelId);
                     response.sendRedirect("/hotel?hotelId=" + hotelId);
+                    session.setAttribute("message", "Successfully deleted the review");
                 }
             }
         }
