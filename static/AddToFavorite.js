@@ -3,4 +3,5 @@ function addToFavorite(id) {
      catch(err => {
        console.log(err);
      });
+     alert("Added this hotel to favorite!");
  };
