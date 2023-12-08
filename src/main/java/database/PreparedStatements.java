@@ -31,12 +31,13 @@ public class PreparedStatements {
                     "rating INT NOT NULL, " +
                     "likes INT NOT NULL);";
 
-    public static final String CREATE_TABLE_USERLIKES =
-            "CREATE TABLE userlikes (" +
-                    "username VARCHAR(32), " +
-                    "reviewid INT, " +
+    public static final String CREATE_TABLE_USERFAVORITES =
+            "CREATE TABLE userfavorites (" +
+                    "username VARCHAR(32) NOT NULL, " +
+                    "hotelid INT NOT NULL, " +
                     "FOREIGN KEY (username) REFERENCES users(username), " +
-                    "FOREIGN KEY (reviewid) REFERENCES reviews(reviewid));";
+                    "CONSTRAINT k PRIMARY KEY (username,hotelid), " +
+                    "FOREIGN KEY (hotelid) REFERENCES hotels(hotelid));";
 
     public static final String CREATE_TABLE_USERREVIEWS =
             "CREATE TABLE userreviews (" +
@@ -103,4 +104,13 @@ public class PreparedStatements {
 
     public static final String CLEAR_HISTORY =
             "DELETE FROM expediahistory WHERE username=?";
+
+    public static final String ADD_FAVORITE =
+            "INSERT INTO userfavorites (username, hotelid) " + "VALUES (?, ?);";
+
+    public static final String GET_FAVORITE =
+            "SELECT * FROM userfavorites WHERE username=?";
+
+    public static final String CLEAR_FAVORITE =
+            "DELETE FROM userfavorites WHERE username=?";
 }

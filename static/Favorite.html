@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Favorites</title>
+</head>
+<body>
+<p>$message</p>
+<form method="post" action="/logout">
+    <input type=submit name="logout" value='Log out'><br>
+</form>
+<form method="get" action="/search">
+    <input type=submit name="return" value='Go to search'><br>
+</form>
+<form method="post" action="/favorite">
+    <input type=submit name="clear" value='Clear favorite'><br>
+</form>
+<ul>
+    #foreach( $hotel in $hotels)
+    <li><a href="/hotel?hotelId=$hotel.id">$hotel.name</a></li>
+    #end
+</ul>
+</body>
+</html>

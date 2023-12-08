@@ -69,7 +69,7 @@ public class DatabaseHandler {
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_HOTELS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_REVIEWS);
-            statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERLIKES);
+            statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERFAVORITES);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERREVIEWS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_EXPEDIAHISTORY);
         }
@@ -400,14 +400,14 @@ public class DatabaseHandler {
         }
     }
 
-    public void addExpediaHistory(Hotel hotel, String username) {
+    public void addExpediaHistory(String hotelId, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
             System.out.println("Add Expedia history: dbConnection successful");
             try {
                 statement = connection.prepareStatement(PreparedStatements.ADD_EXPEDIAHISTORY);
                 statement.setString(1, username);
-                statement.setString(2, hotel.getId());
+                statement.setString(2, hotelId);
                 statement.executeUpdate();
                 statement.close();
             }
@@ -422,18 +422,17 @@ public class DatabaseHandler {
 
     public List<String> getExpediaHistory(String username) {
         PreparedStatement statement;
+        List<String> history = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
             System.out.println("Get Expedia history: dbConnection successful");
             try {
                 statement = connection.prepareStatement(PreparedStatements.GET_EXPEDIAHISTORY);
                 statement.setString(1, username);
                 ResultSet results = statement.executeQuery();
-                List<String> history = new ArrayList<>();
                 while (results.next()) {
                     history.add(results.getString("hotelid"));
                 }
                 statement.close();
-                return history;
             }
             catch(SQLException e) {
                 System.out.println(e);
@@ -442,7 +441,7 @@ public class DatabaseHandler {
         catch (SQLException ex) {
             System.out.println(ex);
         }
-        return null;
+        return history;
     }
 
     public void clearHistory(String username) {
@@ -451,6 +450,69 @@ public class DatabaseHandler {
             System.out.println("Clear history: dbConnection successful");
             try {
                 statement = connection.prepareStatement(PreparedStatements.CLEAR_HISTORY);
+                statement.setString(1, username);
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void addFavorite(String hotelId, String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Add favorite hotel: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.ADD_FAVORITE);
+                statement.setString(1, username);
+                statement.setString(2, hotelId);
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public List<String> getFavorite(String username) {
+        PreparedStatement statement;
+        List<String> favorites = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Get favorite: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.GET_FAVORITE);
+                statement.setString(1, username);
+                ResultSet results = statement.executeQuery();
+                while (results.next()) {
+                    favorites.add(results.getString("hotelid"));
+                }
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return favorites;
+    }
+
+    public void clearFavorite(String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            System.out.println("Clear favorite: dbConnection successful");
+            try {
+                statement = connection.prepareStatement(PreparedStatements.CLEAR_FAVORITE);
                 statement.setString(1, username);
                 statement.executeUpdate();
                 statement.close();

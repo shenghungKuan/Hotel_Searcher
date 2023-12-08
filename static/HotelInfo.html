@@ -5,6 +5,7 @@
     <title>HotelInfo</title>
   <script src="FetchReview.js"></script>
   <script src="FetchWeather.js"></script>
+  <script src="AddToFavorite.js"></script>
 </head>
 <body>
 <p>
@@ -19,6 +20,7 @@
   fetchWeather($lat, $lng);
 </script>
 <p>
+  <button onclick="addToFavorite($hotel.id)">Add to favorite</button><br>
   Hotel: $hotel.name<br>
   Id: $hotel.id<br>
   Address: $hotel.address<br>
