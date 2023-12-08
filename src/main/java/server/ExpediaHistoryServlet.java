@@ -51,7 +51,7 @@ public class ExpediaHistoryServlet extends HotelServlet{
 
         if (hotelId != null) {
             Hotel hotel = hotelSearcher.find(hotelId);
-            dbHandler.addExpediaHistory(hotel, username);
+            dbHandler.addExpediaHistory(hotelId, username);
         }
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");

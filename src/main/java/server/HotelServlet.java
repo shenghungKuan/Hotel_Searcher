@@ -36,7 +36,6 @@ public class HotelServlet extends HttpServlet{
         String hotelId = request.getParameter("hotelId");
         hotelId = StringEscapeUtils.escapeHtml4(hotelId);
         PrintWriter out = response.getWriter();
-        System.out.println("In hotel info, hotel Id: " + hotelId);
 
         HttpSession session = request.getSession();
         session.setAttribute("hotelId", hotelId);
