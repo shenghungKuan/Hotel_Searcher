@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<p>$message</p>
-<form method="post" action="$action">
-    Enter your username:<br><input type="text" name="username"><br>
-    Enter your password:<br><input type="password" name="pass"><br>
+<div class="container">
+    <p>$message</p>
+</div>
+<div class="container">
+<form method="post" action="/portal">
+    <div class="form-group">
+        <label for="usr">Enter your username:</label>
+        <input id="usr" class="form-control" type="text" name="username"><br>
+        <label for="pw">Enter your password:</label>
+        <input id="pw" class="form-control" type="password" name="pass"><br>
     <p>
-        <input type=submit name="register" value='Sign up'>
-        <input type=submit name="register" value='Sign in'>
+        <button type="submit" class="btn btn-primary" name="register" value="Sign in">Sign in</button>
+        <button type="submit" class="btn btn-primary" name="register" value="Sign up">Sign up</button>
     </p>
+    </div>
 </form>
+</div>
 </body>
 </html>
