@@ -28,8 +28,7 @@ public class PreparedStatements {
                     "title VARCHAR(64) NOT NULL, " +
                     "text LONGTEXT, " +
                     "time TIMESTAMP, " +
-                    "rating INT NOT NULL, " +
-                    "likes INT NOT NULL);";
+                    "rating INT NOT NULL);";
 
     public static final String CREATE_TABLE_USERFAVORITES =
             "CREATE TABLE userfavorites (" +
@@ -38,13 +37,6 @@ public class PreparedStatements {
                     "FOREIGN KEY (username) REFERENCES users(username), " +
                     "CONSTRAINT k PRIMARY KEY (username,hotelid), " +
                     "FOREIGN KEY (hotelid) REFERENCES hotels(hotelid));";
-
-    public static final String CREATE_TABLE_USERREVIEWS =
-            "CREATE TABLE userreviews (" +
-                    "username VARCHAR(32), " +
-                    "reviewid INT, " +
-                    "FOREIGN KEY (username) REFERENCES users(username), " +
-                    "FOREIGN KEY (reviewid) REFERENCES reviews(reviewid));";
 
     public static final String CREATE_TABLE_EXPEDIAHISTORY =
             "CREATE TABLE expediahistory (" +
@@ -85,7 +77,7 @@ public class PreparedStatements {
             "SELECT * FROM hotels";
 
     public static final String ADD_REVIEW =
-            "INSERT INTO reviews (hotelid, username, title, text, time, rating, likes) " + "VALUES (?, ?, ?, ?, ?, ?, 0);";
+            "INSERT INTO reviews (hotelid, username, title, text, time, rating) " + "VALUES (?, ?, ?, ?, ?, ?);";
 
     public static final String GET_REVIEWWITHID =
             "SELECT * FROM reviews WHERE hotelid=?";

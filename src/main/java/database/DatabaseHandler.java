@@ -70,7 +70,6 @@ public class DatabaseHandler {
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_HOTELS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_REVIEWS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERFAVORITES);
-            statement.executeUpdate(PreparedStatements.CREATE_TABLE_USERREVIEWS);
             statement.executeUpdate(PreparedStatements.CREATE_TABLE_EXPEDIAHISTORY);
         }
         catch (SQLException ex) {
