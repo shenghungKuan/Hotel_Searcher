@@ -97,6 +97,10 @@ public class PortalServlet extends HttpServlet {
 						session.setAttribute("message", "Invalid username");
 						session.setAttribute("username", null);
 						response.sendRedirect("/portal");
+					} else if (username.length() >= 32) {
+						session.setAttribute("message", "Username too long");
+						session.setAttribute("username", null);
+						response.sendRedirect("/portal");
 					} else {
 						dbHandler.registerUser(username, password);
 						session.setAttribute("lastlogin", "You haven't logged in before!");
