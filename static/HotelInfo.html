@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>HotelInfo</title>
-  <script src="static/FetchReview.js"></script>
+  <script src="FetchReview.js"></script>
+  <script src="FetchWeather.js"></script>
 </head>
 <body>
 <p>
@@ -14,12 +15,16 @@
 <form method="get" action="/review?hotelId=$id">
   <input type=submit name="review" value='Add/Modify/Delete review'><br>
 </form>
+<script>
+  fetchWeather($lat, $lng);
+</script>
 <p>
   Hotel: $hotel.name<br>
   Id: $hotel.id<br>
   Address: $hotel.address<br>
   Rating: $rating<br>
   Link: <a href="$link" target=”_blank” onclick="recordHistory($hotel.id)">$hotel.name</a><br>
+  <p id="weather"></p>
   Reviews:<br>
   #foreach( $review in $reviews)
     <br>User: $review.userNickname<br>

@@ -69,6 +69,8 @@ public class HotelServlet extends HttpServlet{
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();
         Template template = ve.getTemplate("static/HotelInfo.html");
+        context.put("lat", hotel.getLat());
+        context.put("lng", hotel.getLng());
         context.put("id", hotelId);
         context.put("rating", sum);
         context.put("hotel", hotel);
