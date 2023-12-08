@@ -34,6 +34,7 @@ public class ShowReviewServlet extends HttpServlet {
         response.setContentType("text/html");
         String hotelId = request.getParameter("hotelId");
         hotelId = StringEscapeUtils.escapeHtml4(hotelId);
+        String page = request.getParameter("page");
         PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession();
@@ -42,6 +43,12 @@ public class ShowReviewServlet extends HttpServlet {
         if (username == null) {
             response.sendRedirect("/portal");
             return;
+        }
+
+        if (hotelId == null) {
+            hotelId = (String) session.getAttribute("hotelId");
+        } else {
+            session.setAttribute("hotelId", hotelId);
         }
 
         HotelSearcher hotelSearcher = (HotelSearcher) getServletContext().getAttribute("hotelSearcher");
@@ -53,7 +60,34 @@ public class ShowReviewServlet extends HttpServlet {
             response.sendRedirect("/search");
             return;
         }
+
         List<Review> reviews = reviewSearcher.findReview(hotelId);
+        if (reviews.size() == 0) {
+            out.println("No review");
+        } else if (page == null || page.equals("0")) {
+            reviews = reviews.subList(0, Math.min(reviews.size(), 5));
+            session.setAttribute("page", "0");
+        } else if(page.equals("next")){
+            page = (String) session.getAttribute("page");
+            int no = Integer.parseInt(page) + 1;
+            if (no * 5 >= reviews.size()) {
+                reviews = reviews.subList(0, Math.min(reviews.size(), 5));
+                session.setAttribute("page", "0");
+            } else {
+                reviews = reviews.subList(no * 5, Math.min(reviews.size(), (no + 1) * 5));
+                session.setAttribute("page", String.valueOf(no));
+            }
+        } else {
+            page = (String) session.getAttribute("page");
+            int no = Integer.parseInt(page) - 1;
+            if (no < 0) {
+                reviews = reviews.subList(0, Math.min(reviews.size(), 5));
+                session.setAttribute("page", "0");
+            } else {
+                reviews = reviews.subList(no * 5, Math.min(reviews.size(), (no + 1) * 5));
+                session.setAttribute("page", String.valueOf(no));
+            }
+        }
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         VelocityContext context = new VelocityContext();

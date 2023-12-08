@@ -1,10 +1,9 @@
  function fetchReview(id) {
  console.log(id);
-     fetch('/showreview?hotelId=' + id, {method :'get'}).
+     fetch('/showreview?hotelId=' + id + '&page=0', {method :'get'}).
      then(res => res.text()).
      then(data => {
          document.getElementById("reviews").innerHTML = data;
-         console.log(data);
       }).
      catch(err => {
        console.log(err);
