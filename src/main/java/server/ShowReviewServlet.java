@@ -64,6 +64,7 @@ public class ShowReviewServlet extends HttpServlet {
         List<Review> reviews = reviewSearcher.findReview(hotelId);
         if (reviews.size() == 0) {
             out.println("No review");
+            return;
         } else if (page == null || page.equals("0")) {
             reviews = reviews.subList(0, Math.min(reviews.size(), 5));
             session.setAttribute("page", "0");
