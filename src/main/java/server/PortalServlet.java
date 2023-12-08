@@ -93,6 +93,10 @@ public class PortalServlet extends HttpServlet {
 						session.setAttribute("message", "Password is too short (at least 8 characters)");
 						session.setAttribute("username", null);
 						response.sendRedirect("/portal");
+					} else if (username.equals("") || username.equals("Anonymous")) {
+						session.setAttribute("message", "Invalid username");
+						session.setAttribute("username", null);
+						response.sendRedirect("/portal");
 					} else {
 						dbHandler.registerUser(username, password);
 						session.setAttribute("lastlogin", "You haven't logged in before!");
