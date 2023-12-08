@@ -11,7 +11,6 @@ public class JettyHotelServer {
 	public static final int PORT = 8080;
 
 	public static void main(String[] args)  {
-		// FILL IN CODE, and add more classes as needed
 		Server server = new Server(PORT);
 		ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
@@ -27,10 +26,8 @@ public class JettyHotelServer {
 		velocity.init();
 
 		ResourceHandler resourceHandler = new ResourceHandler();
-		// Set the base resource (the root directory for your static content)
-		resourceHandler.setResourceBase("static"); // Adjust the path accordingly
+		resourceHandler.setResourceBase("static");
 
-		// Create a HandlerList to manage multiple handlers if needed
 		HandlerList handlers = new HandlerList();
 		handlers.addHandler(resourceHandler);
 

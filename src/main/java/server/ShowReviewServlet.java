@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ShowReviewServlet extends HttpServlet {
     /**
-     * Called by the server (via the service method) to allow a servlet to handle a hotelInfo GET request.
+     * Called by the server (via the service method) to allow a servlet to handle a show review GET request.
      * @param request an HttpServletRequest object that contains the request the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response the servlet sends to the client
      * @throws ServletException if the request for the GET could not be handled

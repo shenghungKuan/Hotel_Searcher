@@ -3,9 +3,6 @@ package server;
 import database.DatabaseHandler;
 import hotelapp.Hotel;
 import hotelapp.HotelSearcher;
-import hotelapp.Review;
-import hotelapp.ReviewSearcher;
-import org.apache.commons.text.StringEscapeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -22,7 +19,7 @@ import java.util.Objects;
 
 public class ExpediaHistoryServlet extends HotelServlet{
     /**
-     * Called by the server (via the service method) to allow a servlet to handle a hotelInfo GET request.
+     * Called by the server (via the service method) to allow a servlet to handle a expedia history GET request.
      *
      * @param request  an HttpServletRequest object that contains the request the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response the servlet sends to the client
@@ -74,6 +71,14 @@ public class ExpediaHistoryServlet extends HotelServlet{
         template.merge(context, out);
     }
 
+    /**
+     * Called by the server (via the service method) to allow a servlet to handle a expedia history POST request.
+     *
+     * @param request  an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the GET could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the POST request
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);

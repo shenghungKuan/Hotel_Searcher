@@ -10,7 +10,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
 
     /**
-     * Called by the server (via the service method) to allow a servlet to handle a logout POST request.
+     * Called by the server (via the service method) to allow a servlet to handle a logout GET request.
      * @param request an HttpServletRequest object that contains the request the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response the servlet sends to the client
      * @throws ServletException if the request for the GET could not be handled

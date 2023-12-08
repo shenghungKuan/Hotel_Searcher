@@ -32,6 +32,14 @@ public class Hotel {
 
     private String link;
 
+    /**
+     * The constructor of a Hotel object
+     * @param name the hotel name
+     * @param id the hotel id
+     * @param lat the latitude of the hotel
+     * @param lng the longitude of the hotel
+     * @param address the address of the hotel
+     */
     public Hotel(String name, String id, String lat, String lng, String address) {
         this.name = name;
         this.id = id;

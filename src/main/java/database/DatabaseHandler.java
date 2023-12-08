@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  *
- * Modified from the example of Prof. Engle
+ * Handle all the database-related functionalities
  */
 public class DatabaseHandler {
 
@@ -37,9 +37,6 @@ public class DatabaseHandler {
     public static DatabaseHandler getInstance() {
         return dbHandler;
     }
-
-
-    // Load info from config file database.properties
 
     /**
      * load database configuration properties
@@ -156,7 +153,7 @@ public class DatabaseHandler {
      * Authenticates users by checking if the entered password matches the one in the database
      * @param username username
      * @param password password
-     * @return true if it matches, otherwise false
+     * @return the time of last login if it matches, otherwise null
      */
     public Timestamp authenticateUser(String username, String password) {
         PreparedStatement statement;
@@ -209,7 +206,6 @@ public class DatabaseHandler {
      * @param connection - active database connection
      * @param user - which user to retrieve salt for
      * @return salt for the specified user or null if user does not exist
-     * @throws SQLException if any issues with database connection
      */
     private String getSalt(Connection connection, String user) {
         String salt = null;
@@ -227,6 +223,10 @@ public class DatabaseHandler {
         return salt;
     }
 
+    /**
+     * Adds a hotel into database
+     * @param hotel the hotel to be added
+     */
     public void addHotel(Hotel hotel) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -250,17 +250,22 @@ public class DatabaseHandler {
         }
     }
 
-    public Hotel getHotelWithId(String hotelid) {
+    /**
+     * Gets the hotel info from database with the given hotel id
+     * @param hotelId the id of the hotel
+     * @return the Hotel object with the given id if it exists, otherwise null
+     */
+    public Hotel getHotelWithId(String hotelId) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
             System.out.println("Get hotel with id: dbConnection successful");
             try {
                 statement = connection.prepareStatement(PreparedStatements.GET_HOTELWITHID);
-                statement.setString(1, hotelid);
+                statement.setString(1, hotelId);
                 ResultSet results = statement.executeQuery();
                 if (results.next()) {
                     Hotel hotel = new Hotel(results.getString("name"),
-                            results.getString("hotelid"), results.getString("lat"),
+                            results.getString("hotelId"), results.getString("lat"),
                             results.getString("lng"), results.getString("address"));
                     statement.close();
                     return hotel;
@@ -276,6 +281,10 @@ public class DatabaseHandler {
         return null;
     }
 
+    /**
+     * Gets all the hotels from database
+     * @return a list of all the hotels
+     */
     public List<Hotel> getAllHotel() {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -302,6 +311,10 @@ public class DatabaseHandler {
         return null;
     }
 
+    /**
+     * Adds a review into database
+     * @param review the review to be added
+     */
     public void addReview(Review review) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -326,6 +339,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Gets the reviews with the given hotel id
+     * @param hotelId the id of the hotel
+     * @return a list of reviews of the hotel, null if an error happens
+     */
     public List<Review> getReviewWithId(String hotelId) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -356,6 +374,12 @@ public class DatabaseHandler {
         return null;
     }
 
+    /**
+     * Gets the review of the given hotel id and username
+     * @param hotelId the id of the hotel
+     * @param username the username of the user
+     * @return true if there is a review from the user of the hotel, otherwise false
+     */
     public boolean getReviewWithName(String hotelId, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -379,6 +403,11 @@ public class DatabaseHandler {
         return false;
     }
 
+    /**
+     * Deletes the review of the user of the hotel
+     * @param hotelid the id of the hotel
+     * @param username the username of the user
+     */
     public void deleteReview(String hotelid, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -399,6 +428,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Adds a history if the user clicks the expedia link
+     * @param hotelId the id of the hotel
+     * @param username the username of the user
+     */
     public void addExpediaHistory(String hotelId, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -419,6 +453,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Gets all the expedia history of the user
+     * @param username the username of the user
+     * @return a list of hotel id that the user has searched
+     */
     public List<String> getExpediaHistory(String username) {
         PreparedStatement statement;
         List<String> history = new ArrayList<>();
@@ -443,6 +482,10 @@ public class DatabaseHandler {
         return history;
     }
 
+    /**
+     * Clears all the expedia history of the user
+     * @param username the username of the user
+     */
     public void clearHistory(String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -462,6 +505,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Adds a hotel to the favorite list of the user
+     * @param hotelId the id of the hotel
+     * @param username the username of the user
+     */
     public void addFavorite(String hotelId, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -482,6 +530,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Gets the hotel ids of the user's favorite
+     * @param username the username of the user
+     * @return a list of hotel ids
+     */
     public List<String> getFavorite(String username) {
         PreparedStatement statement;
         List<String> favorites = new ArrayList<>();
@@ -506,6 +559,10 @@ public class DatabaseHandler {
         return favorites;
     }
 
+    /**
+     * Clears the favorite list of the user
+     * @param username the username of the user
+     */
     public void clearFavorite(String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {

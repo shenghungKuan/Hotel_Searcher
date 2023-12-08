@@ -22,14 +22,14 @@ public class Review implements Comparable<Review>{
 
     private int ratingOverall;
 
-
     /**
      * The constructor of a Review
-     * @param hotelId id of the hotel
-     * @param title title of the hotel
-     * @param reviewText review content
-     * @param userNickname nickname of the user
-     * @param datePosted posted date of the Review
+     * @param hotelId the hotel id
+     * @param title the title of the review
+     * @param reviewText the text of the review
+     * @param userNickname the username of the review
+     * @param datePosted the posted date of the review
+     * @param rating the rating of the review
      */
     public Review(String hotelId, String title, String reviewText, String userNickname, Timestamp datePosted, int rating) {
         this.hotelId = hotelId;
@@ -40,12 +40,12 @@ public class Review implements Comparable<Review>{
         this.ratingOverall = rating;
     }
 
+    /**
+     * Gets the overall rating of the review
+     * @return the rating
+     */
     public int getRatingOverall() {
         return ratingOverall;
-    }
-
-    public void setRatingOverall(int ratingOverall) {
-        this.ratingOverall = ratingOverall;
     }
 
     /**
@@ -57,14 +57,6 @@ public class Review implements Comparable<Review>{
     }
 
     /**
-     * Setter for hotelId
-     * @param hotelId the hotel id
-     */
-    public void setHotelId(String hotelId) {
-        this.hotelId = hotelId;
-    }
-
-    /**
      * Getter for title
      * @return title the title
      */
@@ -73,27 +65,11 @@ public class Review implements Comparable<Review>{
     }
 
     /**
-     * Setter for title
-     * @param title the title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
      * Getter for review text
      * @return reviewText the review text
      */
     public String getReviewText() {
         return reviewText;
-    }
-
-    /**
-     * Setter for review text
-     * @param reviewText the review text
-     */
-    public void setReviewText(String reviewText) {
-        this.reviewText = reviewText;
     }
 
     /**
@@ -119,24 +95,6 @@ public class Review implements Comparable<Review>{
     public Timestamp getDatePosted() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd[' ']['T']HH:mm:ss[.S][X]");
         return Timestamp.valueOf(LocalDateTime.parse(this.datePosted, formatter));
-    }
-
-    /**
-     * Setter for datePosted
-     * @param datePosted The posted date of the review
-     */
-    public void setDatePosted(String datePosted) {
-        this.datePosted = datePosted;
-    }
-
-    /**
-     * The compareTo method for reviews
-     * @param review the object to be compared.
-     * @return an integer indicating the comparison between two reviews
-     */
-    @Override
-    public int compareTo(Review review) {
-        return this.getDatePosted().compareTo(review.getDatePosted());
     }
 
     /**

@@ -60,7 +60,7 @@ public class ReviewServlet extends HttpServlet {
      * @param request an HttpServletRequest object that contains the request the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response the servlet sends to the client
      * @throws ServletException if the request for the GET could not be handled
-     * @throws IOException if an input or output error is detected when the servlet handles the GET request
+     * @throws IOException if an input or output error is detected when the servlet handles the POST request
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
