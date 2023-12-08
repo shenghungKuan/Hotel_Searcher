@@ -25,14 +25,8 @@
   Rating: $rating<br>
   Link: <a href="$link" target=”_blank” onclick="recordHistory($hotel.id)">$hotel.name</a><br>
   <p id="weather"></p>
-  Reviews:<br>
-  #foreach( $review in $reviews)
-    <br>User: $review.userNickname<br>
-    Title: $review.title<br>
-    Date: $review.datePosted<br>
-    Overall rating: $review.ratingOverall<br>
-    Review: $review.reviewText<br>
-  #end
+<button onclick="fetchReview($hotel.id)">Show reviews</button>
+<p id="reviews"></p>
 </p>
 
 </body>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews</title>
+</head>
+<body>
+Reviews:<br>
+#foreach( $review in $reviews)
+<br>User: $review.userNickname<br>
+Title: $review.title<br>
+Date: $review.datePosted<br>
+Overall rating: $review.ratingOverall<br>
+Review: $review.reviewText<br>
+#end
+
+</body>
+</html>
