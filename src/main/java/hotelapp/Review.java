@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * The review class used to store the information in a review
  */
-public class Review implements Comparable<Review>{
+public class Review{
     private String hotelId;
     private String title;
     private String reviewText;
