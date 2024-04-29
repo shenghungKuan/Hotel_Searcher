@@ -1,4 +1,4 @@
-# Trip helper web application
+# Hotel searcher web application
 
 This is a web application that can help you plan your trips!  
 You can search for hotels and it will bring you to the expedia page of the hotel.  
