@@ -1,9 +1,9 @@
-# Hotel searcher web application
+# Hotel search engine
 
-This is a web application that can help you plan your trips!  
-You can search for hotels and it will bring you to the expedia page of the hotel.  
-It also supports history and favorite feature, where history stores all the hotel pages you go to, and favorite allows you to save the hotels you like.  
-With login/sign-up feature, users have their own profiles, which is saved in the database using MySQL.  
+This is a RESTful web application that can help you plan your trips!  
+You can search for hotels and it will bring you to the Expedia page of the hotel.  
+It also supports the history and favorite feature, where history stores all the hotel pages you go to, and favorite allows you to save the hotels you like.  
+With the login/sign-up feature, users have their profiles saved in the database using MySQL.  
 
 ## Technologies used
 
